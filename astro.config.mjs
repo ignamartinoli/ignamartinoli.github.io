@@ -11,5 +11,5 @@ export default defineConfig({
 			theme: 'catppuccin-macchiato'
 		}
 	},
-	site: 'https://example.com'
+	site: 'https://ignamartinoli.github.io'
 });
