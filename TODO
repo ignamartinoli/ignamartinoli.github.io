@@ -1,0 +1,13 @@
+- fix top scrollover
+- header hover bold color
+- improve image quality
+- add links and social media
+- add tags
+- write about me
+- create cards component
+- add effects on hover to cards
+- add interactivity to the backgound
+- add animation of growing to blog cards
+- when changing page, don't reload the background
+- change font to jetbrains
+- change FallbackImage

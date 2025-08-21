@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Background from '../../components/Background.astro';
+import BaseHead from '../../components/BaseHead.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 960px;
+			}
+
+			ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			ul li {
+				background: color-mix(in srgb, var(--overlay2) 5%, transparent);
+				backdrop-filter: blur(10px);
+				border: 1px solid rgba(255, 255, 255, 0.5);
+				border-radius: 16px;
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+				box-sizing: border-box;
+				width: calc(50% - 1rem);
+				transition: transform 0.5s;
+			}
+
+			ul li:hover {
+				transform: scale(1.02);
+			}
+
+			ul li * {
+				text-align: center;
+				text-decoration: none;
+				transition: 0.2s ease;
+			}
+
+			ul li:first-child {
+				margin-bottom: 1rem;
+				width: 100%;
+			}
+
+			ul li:first-child .title {
+				font-size: 2.369rem;
+			}
+
+			ul li img {
+				border-radius: 12px;
+				height: 95%;
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+				width: 95%;
+			}
+
+			ul li a {
+				display: block;
+			}
+
+			.title {
+				color: rgb(--text);
+				line-height: 1;
+				margin: 0;
+			}
+
+			.date {
+				color: rgb(var(--gray));
+				margin: 0;
+			}
+
+			ul li:hover {
+				box-shadow: var(--box-shadow);
+			}
+
+			@media (max-width: 720px) {
+				ul {
+					gap: 0.5em;
+				}
+
+				ul li {
+					width: 100%;
+					text-align: center;
+				}
+
+				ul li:first-child {
+					margin-bottom: 0;
+				}
+
+				ul li:first-child .title {
+					font-size: 1.563em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Background />
+		<Header />
+		<main>
+			<section>
+				<ul>
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<Image width={720} height={360} src={post.data.heroImage} alt="" quality=max />
+									)}
+									<h4 class="title">{post.data.title}</h4>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+	</body>
+</html>

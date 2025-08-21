@@ -1,0 +1,224 @@
+---
+export interface Props {
+	enableMouseInteraction?: boolean;
+}
+
+const { enableMouseInteraction = true } = Astro.props;
+---
+
+<div class="glassmorphic-background">
+	<!-- Large gradient orbs for atmospheric effect -->
+	<div class="gradient-orb orb-1"></div>
+	<div class="gradient-orb orb-2"></div>
+	<div class="gradient-orb orb-3"></div>
+
+	<!-- 
+    Each shape is now a container for the animation, 
+    with a visual child element for the mouse interaction.
+  -->
+	<div class="shape-container shape-triangle">
+		<div class="floating-shape"></div>
+	</div>
+	<div class="shape-container shape-square">
+		<div class="floating-shape"></div>
+	</div>
+	<div class="shape-container shape-pill">
+		<div class="floating-shape"></div>
+	</div>
+	<div class="shape-container shape-circle">
+		<div class="floating-shape"></div>
+	</div>
+</div>
+
+<style>
+	/* Catppuccin Macchiato Palette */
+	:root {
+		--mauve: #cba6f7;
+		--pink: #f5c2e7;
+		--green: #a6e3a1;
+		--teal: #94e2d5;
+		--sapphire: #74c7ec;
+		--blue: #89b4fa;
+		--crust: #181926;
+		--mantle: #1e2030;
+		--base: #24273a;
+	}
+
+	.glassmorphic-background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		z-index: -1;
+		background: linear-gradient(135deg, var(--base), var(--mantle), var(--crust));
+		overflow: hidden;
+	}
+
+	/* --- Gradient Orbs (for atmosphere) --- */
+	.gradient-orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(80px);
+		opacity: 0.25;
+		animation: floatOrb 25s infinite ease-in-out;
+	}
+
+	.orb-1 {
+		width: 450px;
+		height: 450px;
+		background: radial-gradient(circle, var(--mauve), var(--pink));
+		top: -200px;
+		left: -200px;
+		animation-delay: 0s;
+	}
+
+	.orb-2 {
+		width: 350px;
+		height: 350px;
+		background: radial-gradient(circle, var(--blue), var(--sapphire));
+		top: 50%;
+		right: -150px;
+		animation-delay: -8s;
+	}
+
+	.orb-3 {
+		width: 500px;
+		height: 500px;
+		background: radial-gradient(circle, var(--teal), var(--green));
+		bottom: -250px;
+		left: 20%;
+		animation-delay: -15s;
+	}
+
+	/* --- Shape Containers (Handles animation and positioning) --- */
+	.shape-container {
+		position: absolute;
+		animation: floatShape 30s infinite ease-in-out;
+	}
+
+	/* --- Floating Shapes (Handles visuals and mouse interaction) --- */
+	.floating-shape {
+		width: 100%;
+		height: 100%;
+		backdrop-filter: blur(12px);
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		/* This transition is now correctly applied to the mouse-driven transform */
+		transition: transform 0.4s ease-out;
+	}
+
+	/* --- Individual Shape Positioning and Styles --- */
+
+	/* Triangle */
+	.shape-triangle {
+		width: 80px;
+		height: 80px;
+		top: 20%;
+		left: 15%;
+		animation-delay: -3s;
+	}
+	.shape-triangle .floating-shape {
+		clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	}
+
+	/* Square */
+	.shape-square {
+		width: 70px;
+		height: 70px;
+		top: 40%;
+		left: 80%;
+		animation-delay: -12s;
+	}
+	.shape-square .floating-shape {
+		transform: rotate(45deg);
+		border-radius: 10px;
+	}
+
+	/* Pill */
+	.shape-pill {
+		width: 120px;
+		height: 60px;
+		top: 65%;
+		right: 15%;
+		animation-delay: -8s;
+	}
+	.shape-pill .floating-shape {
+		border-radius: 50px;
+	}
+
+	/* Circle */
+	.shape-circle {
+		width: 90px;
+		height: 90px;
+		bottom: 15%;
+		left: 10%;
+		animation-delay: -20s;
+	}
+	.shape-circle .floating-shape {
+		border-radius: 50%;
+	}
+
+	/* --- Animations --- */
+	@keyframes floatOrb {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(-40px); }
+	}
+
+	@keyframes floatShape {
+		0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+		25% { transform: translateY(-20px) translateX(30px) rotate(45deg); }
+		50% { transform: translateY(-40px) translateX(0) rotate(90deg); }
+		75% { transform: translateY(-20px) translateX(-30px) rotate(135deg); }
+	}
+</style>
+
+<script define:vars={{ enableMouseInteraction }}>
+	function initBackgroundInteraction() {
+		if (!enableMouseInteraction) return;
+
+		// Select the outer containers
+		const shapeContainers = document.querySelectorAll('.shape-container');
+		const pushStrength = 50;
+		const interactionRadius = 150;
+
+		const onMouseMove = (event) => {
+			const mouseX = event.clientX;
+			const mouseY = event.clientY;
+
+			shapeContainers.forEach(container => {
+				// Find the visual element inside the container
+				const shape = container.querySelector('.floating-shape');
+				if (!shape) return;
+
+				// Get the position of the animated container
+				const rect = container.getBoundingClientRect();
+				const shapeX = rect.left + rect.width / 2;
+				const shapeY = rect.top + rect.height / 2;
+
+				const distanceX = mouseX - shapeX;
+				const distanceY = mouseY - shapeY;
+				const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+				if (distance < interactionRadius) {
+					const angle = Math.atan2(distanceY, distanceX);
+					const pushFactor = (1 - distance / interactionRadius) * pushStrength;
+					const pushX = -Math.cos(angle) * pushFactor;
+					const pushY = -Math.sin(angle) * pushFactor;
+					
+					// Apply the push transform ONLY to the inner visual element
+					shape.style.transform = `translate(${pushX}px, ${pushY}px)`;
+				} else {
+					// When the mouse is away, reset the inner element's transform
+					shape.style.transform = '';
+				}
+			});
+		};
+
+		document.addEventListener('mousemove', onMouseMove);
+	}
+
+	// Handle Astro's View Transitions and initial page load
+	document.addEventListener('astro:page-load', initBackgroundInteraction);
+	initBackgroundInteraction(); // Also run on initial load
+</script>
