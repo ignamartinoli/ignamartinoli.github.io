@@ -16,7 +16,7 @@ In this post, I’ll share the **tools** and **habits** that helped me make the 
 
 The **terminal** is the natural habitat of a programmer, so having a **good one** is essential.
 
-<img src="/src/assets/kitty.svg" alt="Astro logo" style="float: right; margin-left: 1em; width: 10em;" />
+<img src="/kitty.svg" alt="kitty logo" style="float: right; margin-left: 1em; width: 10em;" />
 
 [**`kitty`**](https://sw.kovidgoyal.net/kitty) isn't the only option out there, but it’s the one I’ve found to offer the **richest set of features**:
 
@@ -31,7 +31,7 @@ Of course, there are other excellent options worth mentioning: [**WezTerm**](htt
 
 ## Zellij
 
-<img src="/src/assets/zellij.png" alt="Astro logo" style="float: right; margin-left: 1em; width: 10em;" />
+<img src="/zellij.png" alt="zellij logo" style="float: right; margin-left: 1em; width: 10em;" />
 
 At its core, [**Zellij**](https://zellij.dev) is a **terminal multiplexer**, that lets you **split panes** and use **tabs**, but its real magic relies in its **session management**.
 
@@ -47,7 +47,7 @@ Written in **Rust**, it’s **fast** and **reliable**, works smoothly across mac
 
 ## yazi
 
-<img src="/src/assets/yazi_logo.png" alt="Yazi logo" style="float: right; margin-left: 1em; width: 10em;" />
+<img src="/yazi.png" alt="yazi logo" style="float: right; margin-left: 1em; width: 10em;" />
 
 Why settle for **Dolphin** when [**Yazi**](https://yazi-rs.github.io) brings all the power straight to your terminal? 
 
@@ -60,7 +60,7 @@ Yazi is a **terminal file manager** that makes working with files feel fast, smo
 - 🔌 **Plugin system** for extending functionality to fit your workflow
 - 🔄 **Async operations** so browsing big directories or remote paths never slows you down
 
-<img src="/src/assets/yazi_demo.gif" alt="yazi demo" /> <!-- TODO: move to public/ -->
+<img src="/yazi_demo.gif" alt="yazi demo" /> <!-- TODO: move to public/ -->
 
 Compared to other terminal file managers, Yazi really shines. [**`lf`**](https://github.com/gokcehan/lf) (my previous lovebird) is **minimal but spartan**, [**`ranger`**](https://ranger.fm) is **flexible but feels heavy**, [**`mc`**](https://midnight-commander.org) (Midnight Commander) is **classic but dated**, and [**`nnn`**](https://github.com/jarun/nnn) is **lean but stripped down**. Yazi blends the best of all worlds: **speed**, **modern features**, and **thoughtful defaults** that let you get **productive immediately**.
 
@@ -68,7 +68,7 @@ Compared to other terminal file managers, Yazi really shines. [**`lf`**](https:/
 
 After growing tired of [**VS Code**](https://code.visualstudio.com) feeling like a **browser wrapped around a text editor**, I began my journey into [**Vim**](https://www.vim.org).
 
-<img src="/src/assets/neovim.png" alt="neovim logo" style="float: left; margin-right: 2em; width: 8em;" />
+<img src="/neovim.png" alt="neovim logo" style="float: left; margin-right: 2em; width: 8em;" />
 
 I quickly fell into the **customization rabbit hole** and watched the ecosystem evolve: from [**`vim-plug`**](https://github.com/junegunn/vim-plug) to [**`packer.nvim`**](https://github.com/wbthomason/packer.nvim) to [**`lazy.nvim`**](https://github.com/folke/lazy.nvim), circling back to Neovim’s **built-in plugin manager**. From [**`coc.nvim`**](https://github.com/neoclide/coc.nvim) to the built-in [**LSP**](https://microsoft.github.io/language-server-protocol) support, and of course the [**Tree-sitter**](https://tree-sitter.github.io/tree-sitter) revolution. It was powerful, but also **too much configuration**.
 
@@ -111,7 +111,7 @@ If you like the control of the terminal but want a **friendly dashboard for Dock
 
 ## kulala
 
-<img src="/src/assets/kulala.svg" alt="kulala logo" style="float: right; margin-left: 1em; width: 8em;" />
+<img src="/kulala.svg" alt="kulala logo" style="float: right; margin-left: 1em; width: 8em;" />
 
 [**Kulala**](https://neovim.getkulala.net) is a **minimal yet powerful REST client** that makes testing APIs fast, smooth, and surprisingly intuitive. You can **send HTTP requests**, organize them with the **HTTP file format**, use **environment variables**, and even write **scripts to automate repetitive tasks** all without leaving your editor.
 
