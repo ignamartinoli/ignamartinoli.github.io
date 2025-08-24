@@ -7,15 +7,10 @@ const { enableMouseInteraction = true } = Astro.props;
 ---
 
 <div class="glassmorphic-background">
-	<!-- Large gradient orbs for atmospheric effect -->
 	<div class="gradient-orb orb-1"></div>
 	<div class="gradient-orb orb-2"></div>
 	<div class="gradient-orb orb-3"></div>
 
-	<!-- 
-    Each shape is now a container for the animation, 
-    with a visual child element for the mouse interaction.
-  -->
 	<div class="shape-container shape-triangle">
 		<div class="floating-shape"></div>
 	</div>
@@ -31,7 +26,6 @@ const { enableMouseInteraction = true } = Astro.props;
 </div>
 
 <style>
-	/* Catppuccin Macchiato Palette */
 	:root {
 		--mauve: #cba6f7;
 		--pink: #f5c2e7;
@@ -55,7 +49,6 @@ const { enableMouseInteraction = true } = Astro.props;
 		overflow: hidden;
 	}
 
-	/* --- Gradient Orbs (for atmosphere) --- */
 	.gradient-orb {
 		position: absolute;
 		border-radius: 50%;
@@ -91,26 +84,20 @@ const { enableMouseInteraction = true } = Astro.props;
 		animation-delay: -15s;
 	}
 
-	/* --- Shape Containers (Handles animation and positioning) --- */
 	.shape-container {
 		position: absolute;
 		animation: floatShape 30s infinite ease-in-out;
 	}
 
-	/* --- Floating Shapes (Handles visuals and mouse interaction) --- */
 	.floating-shape {
 		width: 100%;
 		height: 100%;
 		backdrop-filter: blur(12px);
 		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(255, 255, 255, 0.1);
-		/* This transition is now correctly applied to the mouse-driven transform */
 		transition: transform 0.4s ease-out;
 	}
 
-	/* --- Individual Shape Positioning and Styles --- */
-
-	/* Triangle */
 	.shape-triangle {
 		width: 80px;
 		height: 80px;
@@ -122,7 +109,6 @@ const { enableMouseInteraction = true } = Astro.props;
 		clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	}
 
-	/* Square */
 	.shape-square {
 		width: 70px;
 		height: 70px;
@@ -135,7 +121,6 @@ const { enableMouseInteraction = true } = Astro.props;
 		border-radius: 10px;
 	}
 
-	/* Pill */
 	.shape-pill {
 		width: 120px;
 		height: 60px;
@@ -147,7 +132,6 @@ const { enableMouseInteraction = true } = Astro.props;
 		border-radius: 50px;
 	}
 
-	/* Circle */
 	.shape-circle {
 		width: 90px;
 		height: 90px;
@@ -159,7 +143,6 @@ const { enableMouseInteraction = true } = Astro.props;
 		border-radius: 50%;
 	}
 
-	/* --- Animations --- */
 	@keyframes floatOrb {
 		0%, 100% { transform: translateY(0); }
 		50% { transform: translateY(-40px); }
@@ -177,7 +160,6 @@ const { enableMouseInteraction = true } = Astro.props;
 	function initBackgroundInteraction() {
 		if (!enableMouseInteraction) return;
 
-		// Select the outer containers
 		const shapeContainers = document.querySelectorAll('.shape-container');
 		const pushStrength = 50;
 		const interactionRadius = 150;
@@ -187,11 +169,9 @@ const { enableMouseInteraction = true } = Astro.props;
 			const mouseY = event.clientY;
 
 			shapeContainers.forEach(container => {
-				// Find the visual element inside the container
 				const shape = container.querySelector('.floating-shape');
 				if (!shape) return;
 
-				// Get the position of the animated container
 				const rect = container.getBoundingClientRect();
 				const shapeX = rect.left + rect.width / 2;
 				const shapeY = rect.top + rect.height / 2;
@@ -206,10 +186,8 @@ const { enableMouseInteraction = true } = Astro.props;
 					const pushX = -Math.cos(angle) * pushFactor;
 					const pushY = -Math.sin(angle) * pushFactor;
 					
-					// Apply the push transform ONLY to the inner visual element
 					shape.style.transform = `translate(${pushX}px, ${pushY}px)`;
 				} else {
-					// When the mouse is away, reset the inner element's transform
 					shape.style.transform = '';
 				}
 			});
@@ -218,7 +196,6 @@ const { enableMouseInteraction = true } = Astro.props;
 		document.addEventListener('mousemove', onMouseMove);
 	}
 
-	// Handle Astro's View Transitions and initial page load
 	document.addEventListener('astro:page-load', initBackgroundInteraction);
-	initBackgroundInteraction(); // Also run on initial load
+	initBackgroundInteraction();
 </script>
