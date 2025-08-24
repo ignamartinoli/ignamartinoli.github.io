@@ -35,13 +35,16 @@ Of course, there are other excellent options worth mentioning: [**WezTerm**](htt
 
 At its core, [**Zellij**](https://zellij.dev) is a **terminal multiplexer**, that lets you **split panes** and use **tabs**, but its real magic relies in its **session management**.
 
-Unlike the endless tab chaos you get in a normal terminal, Zellij lets you **name**, **switch**, and even **resurrect full workspaces: panes, tabs, running programs and all**. It’s like bookmarking an entire workflow and picking it up exactly where you left off.
+Unlike the endless tab chaos you get in a normal terminal, Zellij lets you **name**, **switch**, and even **resurrect full workspaces: panes, tabs, running programs and all**.
+It’s like bookmarking an entire workflow and picking it up exactly where you left off.
 
 ![Zellij demo](../../assets/zellij_in_action.gif)
 
-Some of you may already know [**`tmux`**](https://github.com/tmux/tmux/wiki). While it’s older and stable, it can feel a bit **old-school** and **config-heavy**.
+Some of you may already know [**`tmux`**](https://github.com/tmux/tmux/wiki).
+While it’s older and stable, it can feel a bit **old-school** and **config-heavy**.
 
-Zellij, on the other hand, is **approachable** and **user-friendly**. It comes with **sensible defaults**, a built-in **status bar**, and **plugin support**, so you don’t need to wrestle with a long `.tmux.conf` file to get rolling.
+Zellij, on the other hand, is **approachable** and **user-friendly**.
+It comes with **sensible defaults**, a built-in **status bar**, and **plugin support**, so you don’t need to wrestle with a long `.tmux.conf` file to get rolling.
 
 Written in **Rust**, it’s **fast** and **reliable**, works smoothly across machines, and offers a **modern**, **portable**, "just works" setup for managing **real terminal sessions**.
 
@@ -51,7 +54,8 @@ Written in **Rust**, it’s **fast** and **reliable**, works smoothly across mac
 
 Why settle for **Dolphin** when [**Yazi**](https://yazi-rs.github.io) brings all the power straight to your terminal? 
 
-Yazi is a **terminal file manager** that makes working with files feel fast, smooth, and modern. Instead of just giving you a bare-bones interface, it comes packed with features that make everyday file management a lot more powerful:
+Yazi is a **terminal file manager** that makes working with files feel fast, smooth, and modern.
+Instead of just giving you a bare-bones interface, it comes packed with features that make everyday file management a lot more powerful:
 
 - 📂 **Multi-panel layout** with **Vim-like keybindings** for intuitive navigation
 - 🔍 **Fuzzy search** to jump to files and directories instantly
@@ -62,7 +66,9 @@ Yazi is a **terminal file manager** that makes working with files feel fast, smo
 
 <img src="/yazi_demo.gif" alt="yazi demo" /> <!-- TODO: move to public/ -->
 
-Compared to other terminal file managers, Yazi really shines. [**`lf`**](https://github.com/gokcehan/lf) (my previous lovebird) is **minimal but spartan**, [**`ranger`**](https://ranger.fm) is **flexible but feels heavy**, [**`mc`**](https://midnight-commander.org) (Midnight Commander) is **classic but dated**, and [**`nnn`**](https://github.com/jarun/nnn) is **lean but stripped down**. Yazi blends the best of all worlds: **speed**, **modern features**, and **thoughtful defaults** that let you get **productive immediately**.
+Compared to other terminal file managers, Yazi really shines.
+[**`lf`**](https://github.com/gokcehan/lf) (my previous lovebird) is **minimal but spartan**, [**`ranger`**](https://ranger.fm) is **flexible but feels heavy**, [**`mc`**](https://midnight-commander.org) (Midnight Commander) is **classic but dated**, and [**`nnn`**](https://github.com/jarun/nnn) is **lean but stripped down**.
+Yazi blends the best of all worlds: **speed**, **modern features**, and **thoughtful defaults** that let you get **productive immediately**.
 
 ## lazyvim
 
@@ -70,9 +76,12 @@ After growing tired of [**VS Code**](https://code.visualstudio.com) feeling like
 
 <img src="/neovim.png" alt="neovim logo" style="float: left; margin-right: 2em; width: 8em;" />
 
-I quickly fell into the **customization rabbit hole** and watched the ecosystem evolve: from [**`vim-plug`**](https://github.com/junegunn/vim-plug) to [**`packer.nvim`**](https://github.com/wbthomason/packer.nvim) to [**`lazy.nvim`**](https://github.com/folke/lazy.nvim), circling back to Neovim’s **built-in plugin manager**. From [**`coc.nvim`**](https://github.com/neoclide/coc.nvim) to the built-in [**LSP**](https://microsoft.github.io/language-server-protocol) support, and of course the [**Tree-sitter**](https://tree-sitter.github.io/tree-sitter) revolution. It was powerful, but also **too much configuration**.
+I quickly fell into the **customization rabbit hole** and watched the ecosystem evolve: from [**`vim-plug`**](https://github.com/junegunn/vim-plug) to [**`packer.nvim`**](https://github.com/wbthomason/packer.nvim) to [**`lazy.nvim`**](https://github.com/folke/lazy.nvim), circling back to Neovim’s **built-in plugin manager**.
+From [**`coc.nvim`**](https://github.com/neoclide/coc.nvim) to the built-in [**LSP**](https://microsoft.github.io/language-server-protocol) support, and of course the [**Tree-sitter**](https://tree-sitter.github.io/tree-sitter) revolution.
+It was powerful, but also **too much configuration**.
 
-Enter [**LazyVim**](https://www.lazyvim.org), a polished **Neovim distribution** that proves you don’t need a heavyweight IDE to get things done. It comes fully configured with **sensible defaults**, **preloaded plugins**, and **smart keybindings**, so you can start editing right away without spending hours tinkering.
+Enter [**LazyVim**](https://www.lazyvim.org), a polished **Neovim distribution** that proves you don’t need a heavyweight IDE to get things done.
+It comes fully configured with **sensible defaults**, **preloaded plugins**, and **smart keybindings**, so you can start editing right away without spending hours tinkering.
 
 ![lazyvim logo](../../assets/lazyvim_logo.png)
 
@@ -91,21 +100,26 @@ If you love the **speed** and **flexibility** of Neovim but don’t want to spen
 
 ## LazyGit
 
-**LazyGit** is a **terminal-based interface** that makes managing your repositories **fast**, **visual**, and surprisingly **intuitive**. With it, you can **stage changes**, **commit**, **switch branches**, **resolve conflicts**, and even **handle stashes**, all without typing a single long Git command.
+**LazyGit** is a **terminal-based interface** that makes managing your repositories **fast**, **visual**, and surprisingly **intuitive**.
+With it, you can **stage changes**, **commit**, **switch branches**, **resolve conflicts**, and even **handle stashes**, all without typing a single long Git command.
 
 ![lazygit](../../assets/lazygit.gif)
 
-Tired of endlessly clicking around in the **GitHub UI** looking for the right option? LazyGit is **snappier**, keeps you **right in the terminal**, and gives you **instant feedback** on your repository’s state. It doesn't try to replace Git; it makes Git **easier to navigate**, letting you **focus on coding** instead of chasing commands.
+Tired of endlessly clicking around in the **GitHub UI** looking for the right option?
+LazyGit is **snappier**, keeps you **right in the terminal**, and gives you **instant feedback** on your repository’s state.
+It doesn't try to replace Git; it makes Git **easier to navigate**, letting you **focus on coding** instead of chasing commands.
 
 If you love the **speed of the terminal** but want a friendly, **visual way to manage Git**, **LazyGit is the perfect companion**.
 
 ## LazyDocker
 
-Managing [Docker](https://www.docker.com) containers in the terminal can feel like a juggling act with all the commands and context switching. [**LazyDocker**](https://github.com/jesseduffield/lazydocker) makes it easier by providing a **visual, interactive interface** right in your terminal. You can **view containers, images, volumes, and networks**, start or stop containers, follow logs, and even **manage Docker Compose projects** without typing long Docker commands.
+Managing [Docker](https://www.docker.com) containers in the terminal can feel like a juggling act with all the commands and context switching.
+[**LazyDocker**](https://github.com/jesseduffield/lazydocker) makes it easier by providing a **visual, interactive interface** right in your terminal. You can **view containers, images, volumes, and networks**, start or stop containers, follow logs, and even **manage Docker Compose projects** without typing long Docker commands.
 
 ![lazydocker](../../assets/lazydocker.gif)
 
-Compared to [**Docker Desktop**](https://www.docker.com/products/docker-desktop), LazyDocker is **lightweight**, **fast**, and works entirely in the terminal, making it perfect for remote servers or minimal setups. You get all the essential functionality while gaining **speed, simplicity, and a cleaner workflow**.
+Compared to [**Docker Desktop**](https://www.docker.com/products/docker-desktop), LazyDocker is **lightweight**, **fast**, and works entirely in the terminal, making it perfect for remote servers or minimal setups.
+You get all the essential functionality while gaining **speed, simplicity, and a cleaner workflow**.
 
 If you like the control of the terminal but want a **friendly dashboard for Docker**, **LazyDocker makes container management effortless**.
 
@@ -113,7 +127,8 @@ If you like the control of the terminal but want a **friendly dashboard for Dock
 
 <img src="/kulala.svg" alt="kulala logo" style="float: right; margin-left: 1em; width: 8em;" />
 
-[**Kulala**](https://neovim.getkulala.net) is a **minimal yet powerful REST client** that makes testing APIs fast, smooth, and surprisingly intuitive. You can **send HTTP requests**, organize them with the **HTTP file format**, use **environment variables**, and even write **scripts to automate repetitive tasks** all without leaving your editor.
+[**Kulala**](https://neovim.getkulala.net) is a **minimal yet powerful REST client** that makes testing APIs fast, smooth, and surprisingly intuitive.
+You can **send HTTP requests**, organize them with the **HTTP file format**, use **environment variables**, and even write **scripts to automate repetitive tasks** all without leaving your editor.
 
 For example, you could define some variables and send a JSON request like this:
 
@@ -131,6 +146,17 @@ Content-Type: application/json
 }
 ```
 
-Compared to [**Postman**](https://www.postman.com), Kulala is **lightweight, fast, and fully integrated with the editor**. You still get **autocompletion, syntax highlighting, and environment management**, but without the overhead of a heavy GUI. It keeps you focused on your code and your APIs instead of switching between windows.
+Compared to [**Postman**](https://www.postman.com), Kulala is **lightweight, fast, and fully integrated with the editor**.
+You still get **autocompletion, syntax highlighting, and environment management**, but without the overhead of a heavy GUI.
+It keeps you focused on your code and your APIs instead of switching between windows.
 
-![](../../assets/kulala_in_action.gif)
+![kulala demo](../../assets/kulala_in_action.gif)
+
+## Conclusion
+
+This is basically **how I stopped worrying and learned to love the terminal**.
+
+I do really hope that any of these tools help your workflow in a significant way.
+And if you find any new shiny tool **feel free to let me know** 😄.
+
+Stay tuned for **part two**!
