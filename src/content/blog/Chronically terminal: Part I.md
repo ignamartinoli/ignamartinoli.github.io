@@ -130,7 +130,7 @@ If you like the control of the terminal but want a **friendly dashboard for Dock
 [**Kulala**](https://neovim.getkulala.net) is a **minimal yet powerful REST client** that makes testing APIs fast, smooth, and surprisingly intuitive.
 You can **send HTTP requests**, organize them with the **HTTP file format**, use **environment variables**, and even write **scripts to automate repetitive tasks** all without leaving your editor.
 
-For example, you could define some variables and send a JSON request like this:
+For example, you could define some variables and send a basic **JSON request** like this:
 
 ```http
 @url = https://api.example.com
@@ -146,6 +146,26 @@ Content-Type: application/json
 }
 ```
 
+And responses from a request can even be used as **variables** to others:
+
+```http
+###
+# @name TOKEN_REQUEST
+
+POST {{url}}/tokens/authentication
+Content-Type: application/json
+
+{
+	"email": "alice@example.com",
+	"password": "pa55word"
+}
+
+###
+
+GET {{url}}/healthcheck
+Authorization: Bearer {{TOKEN_REQUEST.response.body.authentication_token.token}}
+```
+
 Compared to [**Postman**](https://www.postman.com), Kulala is **lightweight, fast, and fully integrated with the editor**.
 You still get **autocompletion, syntax highlighting, and environment management**, but without the overhead of a heavy GUI.
 It keeps you focused on your code and your APIs instead of switching between windows.
@@ -156,7 +176,7 @@ It keeps you focused on your code and your APIs instead of switching between win
 
 This is basically **how I stopped worrying and learned to love the terminal**.
 
-I do really hope that any of these tools help your workflow in a significant way.
-And if you find any new shiny tool **feel free to let me know** 😄.
+I truly hope these tools make your workflow easier and more efficient.
+And if you come across any new, shiny tools, **I’d love to hear about them** 😄.
 
 Stay tuned for **part two**!
