@@ -146,10 +146,9 @@ Content-Type: application/json
 }
 ```
 
-And responses from a request can even be used as **variables** to others:
+And **responses** from a request can even be used as **variables** to others:
 
 ```http
-###
 # @name TOKEN_REQUEST
 
 POST {{url}}/tokens/authentication

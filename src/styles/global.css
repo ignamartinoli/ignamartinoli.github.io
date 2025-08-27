@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
 	--black: 15, 18, 25;
@@ -38,44 +39,44 @@
 }
 
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
-	font-weight: 400;
-	font-style: normal;
 	font-display: swap;
+	font-family: "Atkinson";
+	font-style: normal;
+	font-weight: 400;
+	src: url("/fonts/atkinson-regular.woff") format("woff");
 }
 
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
-	font-weight: 700;
-	font-style: normal;
 	font-display: swap;
+	font-family: "Atkinson";
+	font-style: normal;
+	font-weight: 700;
+	src: url("/fonts/atkinson-bold.woff") format("woff");
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	font-family: 'Inter', sans-serif;
 	background: linear-gradient(var(--base)) no-repeat;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
 	color: var(--text);
+	font-family: 'Inter', sans-serif;
 	font-size: 20px;
 	line-height: 1.7;
+	margin: 0;
+	overflow-wrap: break-word;
+	padding: 0;
+	word-wrap: break-word;
 }
 
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
 	margin: auto;
+	max-width: calc(100% - 2em);
 	padding: 3em 1em;
+	width: 720px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	margin: 0 0 0.5rem 0;
 	color: rgb(--text);
 	line-height: 1.2;
+	margin: 0 0 0.5rem 0;
 }
 
 h1 {
@@ -119,8 +120,8 @@ p {
 }
 
 textarea {
-	width: 100%;
 	font-size: 16px;
+	width: 100%;
 }
 
 input {
@@ -132,20 +133,20 @@ table {
 }
 
 img {
-	max-width: 100%;
-	height: auto;
 	border-radius: 8px;
+	height: auto;
+	max-width: 100%;
 }
 
 code {
+	border-radius: 2px;
 	padding: 2px 5px;
 	/* TODO: theme background-color: rgb(var(--gray-light)); */ 
-	border-radius: 2px;
 }
 
 pre {
-	padding: 1.5em;
 	border-radius: 8px;
+	padding: 1.5em;
 }
 
 code, pre {
@@ -158,9 +159,9 @@ pre > code {
 
 blockquote {
 	border-left: 4px solid var(--red);
-	padding: 0 0 0 20px;
-	margin: 0px;
 	font-size: 1.333em;
+	margin: 0px;
+	padding: 0 0 0 20px;
 }
 
 hr {
@@ -172,6 +173,7 @@ hr {
 	body {
 		font-size: 18px;
 	}
+
 	main {
 		padding: 1em;
 	}
@@ -179,18 +181,18 @@ hr {
 
 .sr-only {
 	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
 	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
 	clip: rect(1px 1px 1px 1px);
 	/* maybe deprecated but we need to support legacy browsers */
 	clip: rect(1px, 1px, 1px, 1px);
 	/* modern browsers, clip-path works inwards from each corner */
 	clip-path: inset(50%);
+	height: 1px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+	width: 1px;
 }
