@@ -10,6 +10,9 @@ import ThemeIcon from './ThemeIcon.astro';
 			<img src="/favicon.svg" alt="Site logo" width="32" height="32" />
 			<h2><a href="/">{SITE_TITLE}</a></h2>
 		</div>
+		<div class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">
+			☰
+		</div>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
@@ -101,6 +104,34 @@ import ThemeIcon from './ThemeIcon.astro';
 	@media (max-width: 720px) {
 		.social-links {
 			display: none;
+		}
+	}
+
+	.menu-toggle {
+		display: none;
+		font-size: 2rem;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	@media (max-width: 720px) {
+		.internal-links {
+			display: none; /* hide links by default on mobile */
+			flex-direction: column;
+			position: absolute;
+			top: 60px; /* adjust to match header height */
+			right: 0;
+			background: var(--crust);
+			padding: 1em;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+		}
+
+		body.menu-open .internal-links {
+			display: flex; /* show links when menu is open */
+		}
+
+		.menu-toggle {
+			display: block; /* show ☰ button on mobile */
 		}
 	}
 </style>
