@@ -47,7 +47,7 @@ class Rectangle(Shape):
 
 shapes = [Circle(2), Rectangle(3,4)]
 for s in shapes:
-    print(s.area())  # Dispatch based on object type
+    print(s.area())
 ````
 
 In this example, the polymorphism arises from the **inheritance hierarchy**: the interface `area` is the same, but the **concrete implementation depends on the runtime type** of the object.
