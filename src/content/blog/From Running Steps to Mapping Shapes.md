@@ -6,27 +6,30 @@ heroImage: '../../assets/glassmorphic_matrix.webp'
 ---
 
 The **words we use** shape the way we **think**.
-Linguists call this the **Sapir-Whorf hypothesis**.
-The **structure of language** does not just reflect thought, it **channels it**.
+This is known as the **Sapir-Whorf hypothesis** among linguists.
+The **structure of a language channels thought** rather than merely reflecting it.
 
-Edsger W. Dijkstra captured a similar idea about **tools** in *The Humble Programmer*:
+
+In *The Humble Programmer*, Edsger W. Dijkstra encapsulated a similar concept regarding **tools**:
 
 > *"The tools we use have a profound (and devious!) influence on our thinking habits, and, therefore, on our thinking abilities."*
 
-Just as the **grammar** and **vocabulary** of a **language** guide our **perception** and **reasoning**, the **paradigms** and **abstractions** we choose in **programming** shape the **strategies** we employ and the **solutions** we can envision.
+The **paradigms** and **abstractions** we select in **programming** influence the **strategies** we use and the **solutions** we can envision, much like the **grammar** and **vocabulary** of a **language** influence our **perception** and **reasoning**.
 The frameworks we adopt subtly **channel the way we approach and tackle problems**, often in ways we only notice when we step outside them.
-<!-- NOTE: maybe change to "often without our noticing." -->
+
+In this way, by examining how **each particular paradigm interprets the same concept** we can see how altering the way our programs are organized can result in **more straightforward, sophisticated, or powerful solutions**.
+
+<!-- TODO: insert image -->
 
 A clear example is **polymorphism**, where a single **interface** can flexibly express many different **behaviors** depending on **context**.
-Exploring how a **specific paradigm interprets this concept**, we can see how changing the way we structure our programs can lead to **simpler, more elegant, or more powerful solutions**.
 
 ## Understanding Polymorphism
 
 <img src="/python_logo_icon_168886.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 10em;" />
 
-**Polymorphism** is commonly introduced in the context of **object-oriented programming (OOP)**, where it describes the ability of **different objects** to respond differently to the **same method call** following **class hierarchies**.
+Normally, the concept of **Polymorphism** is introduced in the context of **object-oriented programming (OOP)**, where it describes the ability of **different objects** to respond differently to the **same method call** following **class hierarchies**.
 
-For example, a `Shape` interface may define a `draw` method, but invoking `draw()` on a `Circle` or a `Rectangle` executes **completely different behavior**:
+For instance, even though a `draw` method may be defined in a `Shape` interface, calling `draw()` on a `Circle` or a `Rectangle` results in **completely different behaviour**:
 
 ```python
 class Shape:
@@ -52,16 +55,16 @@ for s in shapes:
 
 In this example, the polymorphism arises from the **inheritance hierarchy**: the interface `area` is the same, but the **concrete implementation depends on the runtime type** of the object.
 
-This form of polymorphism, called **subtype polymorphism** or **inheritance polymorphism**, is familiar to many programmers. It illustrates how a **single interface** can abstract over **multiple concrete types**.
+This particular form of polymorphism, called **subtype polymorphism** or **inheritance polymorphism**, is familiar to many programmers. It demonstrates how a **single interface** can abstract over **several concrete types**.
 
 ---
 
-However, polymorphism is **not limited to class hierarchies**.
+However, **class hierarchies** are not the only context in which polymorphism occurs
 
 <img src="/Haskell-Logo.svg" alt="kitty logo" style="float: right; margin-left: 1em; width: 10em;" />
 
-In **ad-hoc polymorphism**, a function can behave differently depending on the **type of its argument**, without requiring inheritance.
-Languages with **type classes**, like **Haskell**, demonstrate this approach:
+**Ad-hoc polymorphism** does not require inheritance; instead, it allows a function to behave differently based on the **type of its argument**.
+**Type-class** languages, such as **Haskell**, serve as examples of this approach:
 
 ```haskell
 class Shape a where
@@ -81,10 +84,10 @@ main = do
     print . area $ Rectangle 3 4
 ```
 
-Here, `area` behaves differently for `Circle` and `Rectangle`, yet **no class hierarchy or runtime type checks** are needed.
-The behavior is attached **directly to the type** itself.
+In this case, `area` behaves differently for `Circle` and `Rectangle`, yet **no class hierarchy or runtime type checks** are needed.
+The behavior is **directly linked to the type** itself.
 
-This approach shows that polymorphism can **exist outside OOP**, expanding the concept beyond **runtime type dispatch**.
+This method extends the idea **beyond runtime type dispatch** by demonstrating that polymorphism can **exist outside of OOP**.
 
 ---
 
