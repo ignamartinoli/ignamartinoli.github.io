@@ -20,12 +20,12 @@ The **terminal** is the natural habitat of a programmer, so having a **good one*
 
 [**`kitty`**](https://sw.kovidgoyal.net/kitty) isn't the only option out there, but it’s the one I’ve found to offer the **richest set of features**:
 
-- ⚡ GPU acceleration
-- ✨ Ligature support
-- 🖼️ Image rendering
-- 🎯 Cursor trailing
-- 🌐 Native Wayland support
-- 😾 A famously grumpy developer
+- GPU acceleration
+- Ligature support
+- Image rendering
+- Cursor trailing
+- Native Wayland support
+- A famously grumpy developer
 
 Of course, there are other excellent options worth mentioning: [**WezTerm**](https://wezterm.org) with a **fantastic community** but still **shaky Wayland support**, and [**Ghostty**](https://ghostty.org) which looks **very promising** but still **needs time** to fully mature.
 
@@ -52,17 +52,17 @@ Written in **Rust**, it’s **fast** and **reliable**, works smoothly across mac
 
 <img src="/yazi.png" alt="yazi logo" style="float: right; margin-left: 1em; width: 10em;" />
 
-Why settle for **Dolphin** when [**Yazi**](https://yazi-rs.github.io) brings all the power straight to your terminal? 
+Why settle for **Dolphin** when [**Yazi**](https://yazi-rs.github.io) brings all the power straight to your terminal?
 
 Yazi is a **terminal file manager** that makes working with files feel fast, smooth, and modern.
 Instead of just giving you a bare-bones interface, it comes packed with features that make everyday file management a lot more powerful:
 
-- 📂 **Multi-panel layout** with **Vim-like keybindings** for intuitive navigation
-- 🔍 **Fuzzy search** to jump to files and directories instantly
-- 🖼️ **Previews for images, PDFs, and code** (with syntax highlighting) right inside the terminal
-- ⚡ **Batch operations** that make moving, copying, and deleting files effortless
-- 🔌 **Plugin system** for extending functionality to fit your workflow
-- 🔄 **Async operations** so browsing big directories or remote paths never slows you down
+- **Multi-panel layout** with **Vim-like keybindings** for intuitive navigation
+- **Fuzzy search** to jump to files and directories instantly
+- **Previews for images, PDFs, and code** (with syntax highlighting) right inside the terminal
+- **Batch operations** that make moving, copying, and deleting files effortless
+- **Plugin system** for extending functionality to fit your workflow
+- **Async operations** so browsing big directories or remote paths never slows you down
 
 <img src="/yazi_demo.gif" alt="yazi demo" /> <!-- TODO: move to public/ -->
 
@@ -87,10 +87,10 @@ It comes fully configured with **sensible defaults**, **preloaded plugins**, and
 
 With **LazyVim**, you’re not giving up any of the essentials you’d expect from **VS Code**:
 
-- 🧩 **LSP support** for completions and diagnostics
-- 🔍 **Fuzzy file and symbol search**
-- 🌳 **Tree-sitter–powered syntax highlighting**
-- 🔧 **Git integration**
+- **LSP support** for completions and diagnostics
+- **Fuzzy file and symbol search**
+- **Tree-sitter–powered syntax highlighting**
+- **Git integration**
 
 The difference is that LazyVim delivers all of this with **blazing speed** in a lightweight, **terminal-native environment**, plus the **flexibility of Neovim customization** already set up for you.
 
@@ -155,8 +155,8 @@ POST {{url}}/tokens/authentication
 Content-Type: application/json
 
 {
-	"email": "alice@example.com",
-	"password": "pa55word"
+ "email": "alice@example.com",
+ "password": "pa55word"
 }
 
 ###

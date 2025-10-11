@@ -1,14 +1,13 @@
 ---
-title: 'From Counting Steps to Mapping Shapes'
+title: 'From Structure to Shape'
 description: 'A new way of seeing code'
 pubDate: 'Aug 25 2025'
-heroImage: '../../assets/glassmorphic_matrix.webp'
+heroImage: '../../assets/Shutterstock_1316477501-2048x1366.png'
 ---
 
 The **words we use** shape the way we **think**.
 This is known as the **Sapir-Whorf hypothesis** among linguists.
 The **structure of a language channels thought** rather than merely reflecting it.
-
 
 In *The Humble Programmer*, Edsger W. Dijkstra encapsulated a similar concept regarding **tools**:
 
@@ -25,9 +24,9 @@ A clear example is **polymorphism**, where a single **interface** can flexibly e
 
 ## Understanding Polymorphism
 
-<img src="/python_logo_icon_168886.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 10em;" />
+<img src="/python_logo_icon_168886.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 8em;" />
 
-Normally, the concept of **Polymorphism** is introduced in the context of **object-oriented programming (OOP)**, where it describes the ability of **different objects** to respond differently to the **same method call** following **class hierarchies**.
+Normally, the concept of **polymorphism** is introduced in the context of **object-oriented programming (OOP)**, where it describes the ability of **different objects** to respond differently to the **same method call** following **class hierarchies**.
 
 For instance, even though a `draw` method may be defined in a `Shape` interface, calling `draw()` on a `Circle` or a `Rectangle` results in **completely different behaviour**:
 
@@ -55,22 +54,25 @@ for s in shapes:
 
 In this example, the polymorphism arises from the **inheritance hierarchy**: the interface `area` is the same, but the **concrete implementation depends on the runtime type** of the object.
 
+<!-- TODO: insert a class diagram -->
+
 This particular form of polymorphism, called **subtype polymorphism** or **inheritance polymorphism**, is familiar to many programmers. It demonstrates how a **single interface** can abstract over **several concrete types**.
 
 ---
 
 However, **class hierarchies** are not the only context in which polymorphism occurs
 
-<img src="/Haskell-Logo.svg" alt="kitty logo" style="float: right; margin-left: 1em; width: 10em;" />
+<img src="/Haskell-Logo.svg" alt="kitty logo" style="float: right; margin-left: 1em; width: 8em;" />
 
-**Ad-hoc polymorphism** does not require inheritance; instead, it allows a function to behave differently based on the **type of its argument**.
+Inheritance is not even required with **ad-hoc polymorphism**; instead, a function will behave differently based on the **type of its argument**.
+
 **Type-class** languages, such as **Haskell**, serve as examples of this approach:
 
 ```haskell
 class Shape a where
     area :: a -> Double
 
-newtype Circle = Circle Double
+data Circle = Circle Double -- newtype
 data Rectangle = Rectangle Double Double
 
 instance Shape Circle where
@@ -87,15 +89,17 @@ main = do
 In this case, `area` behaves differently for `Circle` and `Rectangle`, yet **no class hierarchy or runtime type checks** are needed.
 The behavior is **directly linked to the type** itself.
 
-This method extends the idea **beyond runtime type dispatch** by demonstrating that polymorphism can **exist outside of OOP**.
+This method extends the idea **beyond runtime type dispatch** by demonstrating that polymorphism can **exist outside of the OOP concept**.
 
 ---
 
-<img src="/Julia_Programming_Language.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 10em;" />
+<img src="/Julia_Programming_Language.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 8em;" />
 
-Taking this idea further, **Multiple Dispatch** generalizes ad-hoc polymorphism by selecting the implementation based on the **types of all arguments**.
+**Multiple dispatch** builds on this idea further by choosing the implementation based on the **types of all the arguments**, which is a more general form of ad-hoc polymorphism.
 
-Languages like **Julia** make this approach elegant and natural
+Languages like **Julia** make this approach elegant and natural:
+
+<!-- TODO: create a more fun example with multiple arguments -->
 
 ```julia
 struct Circle
@@ -114,12 +118,21 @@ end
 function area(r::Rectangle)
     r.width * r.height
 end
+
+struct Circle; r::Int; end
+struct Square; s::Int; end
+
+intersect(a::Circle, b::Circle) = "circle-circle"
+intersect(a::Circle, b::Square) = "circle-square"
+
+intersect(Circle(3), Square(4))  # "circle-square"
+
 ```
 
-When calling `area`, **Julia automatically dispatches** to the appropriate method depending on the argument type.
-Unlike OOP polymorphism, multiple dispatch **does not rely on inheritance**.
+When calling `area`, **Julia automatically dispatches** the call to the right method based on the type of the arguments.
+Again, unlike OOP polymorphism, multiple dispatch **does not rely on inheritance**.
 
-### Beyond the concept (outside our the comfort zone)
+### An unexpected generalization
 
 All those examples demonstrate that polymorphism is fundamentally about **adapting behavior to the form of data**, rather than adhering to a particular class structure.
 
@@ -130,18 +143,35 @@ All those examples demonstrate that polymorphism is fundamentally about **adapti
 Instead of adapting to types, it adapts to the **dimensionality or rank of data structures**.
 Operations like **addition or multiplication** seamlessly **work on scalars, vectors, and matrices** without explicit overloading, **generalizing the concept** of polymorphism **from types to shapes**.
 
-## APL
+## A (family of) Programming Languages
 
-### COMING NEXT...
+**APL**, which stands for "**A** **P**rogramming **L**anguage", was the first **array-oriented programming language**, created by **Kenneth Iverson** in the 1960s, based on his **mathematical notation**.
 
-<!--
-### BQN
+It reflects Iverson’s main idea of **notation as a tool of thought**. He believed that programming languages should not only tell machines what to do, but also **help people think** and express ideas **clearly and mathematically**.
 
-BQN is an APL dialect by Marshall Lockbaum that was designed with the objective.
+Because APL was both a **language** and a **philosophy**, it inspired many dialects as developers adapted it to different goals and platforms.
+In this post, we will use what can be seen as APL's spiritual successor: **BQN**.
 
-## Problem in BQN
+Created by **Marshall Lochbaum**, this modern array language builds on APL’s ideas with clearer, more **regular syntax**, **functional programming support**, namespaces and structured error handling, while staying true to Iverson's vision.
 
-TODO
+## Getting our hands dirty
+
+Promethee problem
+
+## Conclusion
+
+Both capture the same point: the programming language you use doesn’t just let you express solutions — it also **shapes how you conceive problems and what solutions you even notice are possible**.
+
+  | Type                      | How Dispatch Happens         | Example Language |
+  | ------------------------- | ---------------------------- | ---------------- |
+  | **Subtype / Inheritance** | Runtime type of object       | Python, Java     |
+  | **Ad-Hoc / Type-based**   | Compile-time type resolution | Haskell          |
+  | **Multiple Dispatch**     | Types of all arguments       | Julia            |
+  | **Rank / Shape-based**    | Shape or dimensionality      | APL              |
+
+> **"A language that doesn’t affect the way you think about programming, is not worth knowing."**
+>
+> -- *Alan Perlin*, first recipient of the Turing Award
 
 ## Translation to other domains
 
@@ -149,19 +179,6 @@ TODO
 print({'LLNNNLL':'Argentina','LLLNLNN':'Brasil','LLNNNN':'Bolivia','LLLLNNN':'Paraguay','LLLNNNN':'Uruguay'}.get(''.join('L' if x.isalpha() else 'N' for x in input())))
 ```
 
-## Conclusion
-
-Both capture the same point: the programming language you use doesn’t just let you express solutions — it also **shapes how you conceive problems and what solutions you even notice are possible**.
-
-
-  | Type                      | How Dispatch Happens         | Example Language |
-  | ------------------------- | ---------------------------- | ---------------- |
-  | **Subtype / Inheritance** | Runtime type of object       | Python, Java     |
-  | **Ad-Hoc / Type-based**   | Compile-time type resolution | Haskell          |
-  | **Multiple Dispatch**     | Types of all arguments       | Julia            |
-  | **Rank / Shape-based**    | Shape or dimensionality      | NumPy, APL       |
-
-> **"A language that doesn’t affect the way you think about programming, is not worth knowing."**
->
-> -- *Alan Perlin*, first recipient of the Turing Award
--->
+```bqn
+"ERROR" ("LLNNNLL"‿"LLLNLNN"‿"LLNNNN"‿"LLLLNNN"‿"LLLNNNN" •HashMap "Argentina"‿"Brasil"‿"Bolivia"‿"Paraguay"‿"Uruguay").Get "LN" ⊏˜ input ∊ '0' + ↕10
+```

@@ -8,7 +8,10 @@ export default defineConfig({
 	integrations: [mdx(), sitemap()],
 	markdown: {
 		shikiConfig: {
-			theme: 'catppuccin-macchiato'
+			themes: {
+				dark: 'catppuccin-macchiato',
+				light: 'catppuccin-latte'
+			}
 		}
 	},
 	site: 'https://ignamartinoli.github.io'

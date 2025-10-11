@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" width="868" height="884" viewBox="0 0 868 884" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+<style type="text/css">
+	circle{
+		fill: #fff;
+		stroke: #000;
+		stroke-width: 5;
+	}
+	path{
+		fill: none;
+		stroke: #000;
+		stroke-width: 4;
+		stroke-linecap: round;
+	}
+	.arrow{
+		fill: none;
+		stroke: #000;
+		stroke-width: 5;
+		stroke-linecap: round;
+	}
+	.nil{
+		stroke: none;
+		fill: #000;
+	}
+	.times, .num4{
+		stroke-width: 5;
+	}
+</style>
+<circle r="32" cx="220.5" cy="39.5"/>
+<circle r="32" cx="73.5" cy="170.5"/>
+<circle r="32" cx="372.5" cy="168.5"/>
+<circle r="32" cx="219.5" cy="294.5"/>
+<circle r="32" cx="526.5" cy="296.5"/>
+<circle r="32" cx="674.5" cy="415.5"/>
+<circle r="32" cx="375.5" cy="427.5"/>
+<circle r="32" cx="225.5" cy="559.5"/>
+<circle r="32" cx="519.5" cy="565.5"/>
+<circle r="32" cx="369.5" cy="697.5"/>
+<circle r="32" cx="665.5" cy="693.5"/>
+<circle r="32" cx="515.5" cy="825.5"/>
+<circle r="32" cx="810.5" cy="827.5"/>
+<path class="arrow" d="M184.5,70.5l-74,57.5M108.5,103.5v25h26"/>
+<path class="arrow" d="M253.5,70.5l74,57.5M329.5,103.5v25h-26"/>
+<path class="arrow" d="M336.5,199.5l-74,57.5M260.5,232.5v25h26"/>
+<path class="arrow" d="M405.5,199.5l74,57.5M481.5,232.5v25h-26"/>
+<path class="arrow" d="M490.5,327.5l-74,57.5M414.5,360.5v25h26"/>
+<path class="arrow" d="M559.5,327.5l74,57.5M635.5,360.5v25h-26"/>
+<path class="arrow" d="M339.5,458.5l-74,57.5M263.5,491.5v25h26"/>
+<path class="arrow" d="M408.5,458.5l74,57.5M484.5,491.5v25h-26"/>
+<path class="arrow" d="M483.5,596.5l-74,57.5M407.5,629.5v25h26"/>
+<path class="arrow" d="M552.5,596.5l74,57.5M628.5,629.5v25h-26"/>
+<path class="arrow" d="M629.5,724.5l-74,57.5M553.5,757.5v25h26"/>
+<path class="arrow" d="M698.5,724.5l74,57.5M774.5,757.5v25h-26"/>
+<path class="times" d="M65,163.5L80.5,177 M73,180v-19.5 M80.5,163.5L65,177"/>
+<path class="plus" d="M226.25,551v16M235,559h-17"/>
+<path class="num2" d="M210.851,281.957H226c1.043,0,1,0.5,1,1.543v10c0,1.175-0.325,1.5-1.5,1.5h-13c-0.969,0-1.5,0.531-1.5,1.5V309h16.5"/>
+<path class="num3" d="M365,682h14.5c1.043,0,1.5,0.457,1.5,1.5v8.5c0,1.175,0.033,3-3,3h-9 M365,709h14.5c1.043,0,1.5-0.457,1.5-1.5V699c0,0,0.124-4-5-4"/>
+<path class="num4" d="M523.5,828h-14v-16.5 M521,814.5v23"/>
+<path class="nil" d="M799.5,813v16h-3l-5.5-10v10h-3.5v-16h3.5l5.5,9.808V813H799.5z M814.5,815v-2h-11v2h4v12h-4v2h11v-2h-4v-12H814.5z M820.5,827v-14h-3v16h12v-2H820.5z"/>
+<path class="nil" d="M666,403v16h-3l-5.5-10v10H654v-16h3.5l5.5,9.808V403H666z M681,405v-2h-11v2h4v12h-4v2h11v-2h-4v-12H681zM687,417v-14h-3v16h12v-2H687z"/>
+</svg>
