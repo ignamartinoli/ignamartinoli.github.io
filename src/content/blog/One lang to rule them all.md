@@ -450,20 +450,20 @@ If we were to translate this to **Prolog**, we would have:
 
 ```prolog
 % curso(codigoCurso, nombre, cupo, horasSemanales, categorias)
-curso('C101', 'Programacion I', 80, 6, ['Obligatoria', 'Desarrollo']).
-curso('C102', 'Paradigmas de Programacion', 50, 4, ['Obligatoria', 'Desarrollo']).
-curso('C103', 'Inteligencia Artificial', 30, 5, ['Electiva', 'Ciencia', 'Desarrollo']).
-curso('C104', 'Redes de Computadoras', 40, 5, ['Obligatoria', 'Soporte']).
+curso("C101", "Programacion I", 80, 6, ["Obligatoria", "Desarrollo"]).
+curso("C102", "Paradigmas de Programacion", 50, 4, ["Obligatoria", "Desarrollo"]).
+curso("C103", "Inteligencia Artificial", 30, 5, ["Electiva", "Ciencia", "Desarrollo"]).
+curso("C104", "Redes de Computadoras", 40, 5, ["Obligatoria", "Soporte"]).
 
 % aula(codigoAula, nombreAula, capacidad)
-aula(1,'Aula Magna',120).
-aula(2,'Laboratorio 1',40).
-aula(3,'Laboratorio 2',35).
-aula(4,'Sala de Conferencias',60).
+aula(1,"Aula Magna",120).
+aula(2,"Laboratorio 1",40).
+aula(3,"Laboratorio 2",35).
+aula(4,"Sala de Conferencias",60).
 
 % Relación curso-aula (cada curso se dicta en un aula determinada)
-dictado('C101',1).
-dictado('C102',2).
-dictado('C103',4).
-dictado('C104',3).
+dictado("C101",1).
+dictado("C102",2).
+dictado("C103",4).
+dictado("C104",3).
 ```
