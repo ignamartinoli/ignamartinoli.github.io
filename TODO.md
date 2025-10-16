@@ -10,6 +10,7 @@
 - add post navigation to the side (<https://github.com/remarkjs/remark-toc>)
 - add RSS support
 - write /about
+- customize scrollbar
 
 ## Fixes
 
@@ -20,3 +21,4 @@
 - when changing page, don't reload the background
 - organize assets
 - make the hamburger menu prettier/glassmorphic
+- use tailwind

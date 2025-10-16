@@ -37,6 +37,12 @@
 	--base: #24273a;
 	--mantle: #1e2030;
 	--crust: #181926;
+
+  --glass-bg: rgba(36, 39, 58, 0.45);       /* base @ 45% */
+  --glass-bg-alt: rgba(54, 58, 79, 0.35);   /* surface0 @ 35% */
+  --glass-stroke: rgba(147,154,183,0.35);   /* overlay2 @ 35% */
+  --glass-shadow: 0 8px 30px rgba(0, 0, 0, 0.35),
+                  0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
 @font-face {
@@ -206,4 +212,94 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 	width: 1px;
+}
+
+/* teburu */
+/* Optional page background to match theme */
+
+/* html, body { */
+/*   background: linear-gradient(180deg, #181926, #1E2030); */
+/*   color: var(--text); */
+/* } */
+/**/
+
+/* Core table */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-stroke);
+  border-radius: 0.875rem;
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  overflow: hidden; /* clip rounded corners */
+}
+
+/* Fallback when blur isn’t supported */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  table { background: rgba(36, 39, 58, 0.75); }
+}
+
+/* Header */
+thead th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+    var(--glass-bg-alt);
+  border-bottom: 1px solid var(--glass-stroke);
+}
+
+/* Cells */
+td {
+  padding: 0.75rem 1rem;
+  color: var(--subtext1);
+  border-bottom: 1px solid rgba(128, 135, 162, 0.25); /* overlay1 */
+}
+
+/* Subtle column dividers */
+th + th,
+td + td {
+  border-left: 1px solid rgba(110, 115, 141, 0.25); /* overlay0 */
+}
+
+/* Rounded corners on outer cells */
+thead tr:first-child th:first-child { border-top-left-radius: 0.875rem; }
+thead tr:first-child th:last-child  { border-top-right-radius: 0.875rem; }
+tbody tr:last-child  td:first-child { border-bottom-left-radius: 0.875rem; }
+tbody tr:last-child  td:last-child  { border-bottom-right-radius: 0.875rem; }
+
+/* Zebra + hover */
+tbody tr:nth-child(odd) td {
+  background: linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+}
+tbody tr {
+  transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+tbody tr:hover {
+  background: rgba(138, 173, 244, 0.07); /* blue tint */
+}
+
+/* Focus state for interactive content inside cells */
+table a, table button {
+  color: var(--blue);
+}
+table a:focus-visible, table button:focus-visible {
+  outline: 2px solid var(--sapphire);
+  outline-offset: 2px;
+  border-radius: 0.35rem;
+}
+
+/* Caption */
+caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  color: var(--lavender);
+  padding: 0 0 0.5rem 0.25rem;
 }
