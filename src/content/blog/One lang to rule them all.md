@@ -5,6 +5,8 @@ pubDate: 'Oct 09 2025'
 heroImage: '../../assets/racket.png'
 ---
 
+## Table of Contents
+
 <img src="/Racket-logo.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 10em;" />
 
 Recently, I’ve been teaching **Programming Paradigms** at my university.
@@ -86,7 +88,7 @@ Generally, Lisp code is made of **S-expressions** (or **symbolic expressions**),
 (a b (c d) 5)
 ```
 
-Under the hood, lists are **chains of pairs** (a.k.a. **`cons` cells**) like **linked lists**:
+Under the hood, lists are **chains of pairs** (a.k.a. **`cons` cells**) like **linked lists**.
 
 ```racket
 (cons 1 (cons 2 (cons 3 '())))  ; the same as '(1 2 3)
@@ -115,7 +117,7 @@ Not every list denotes a procedure call: some begin with a **keyword** (a **spec
 ```
 
 <details>
-<summary>Because code is made of expressions, you can nest it, forming something resembling an AST (Abstract Syntax Tree):
+<summary>Because code is made of expressions, you can nest it, forming something resembling an AST (Abstract Syntax Tree).
 </summary>
 
 ![](../../assets/Corrected_S-expression_tree_2.svg)
@@ -133,7 +135,7 @@ Notice that although the surface **syntax is identical** to runnable code, the l
 '(define x 10)  ; data describing some code, but not executed
 ```
 
-You can inspect the data structure programmatically:
+You can inspect the data structure programmatically.
 
 ```racket
 (list? '(+ 1 2 3))        ; is this a list? -> #t
@@ -158,28 +160,28 @@ Here we are using the **full Racket language**, but later we will pick another f
 
 ## Object-Oriented Programming
 
-Let's use an old exam to illustrate the migration from one language to the other:
+Let's use this **Class Diagram** to illustrate the migration from one language to the other.
 
 <img src="/OOP.drawio.svg" alt="kitty logo" style="width: 100%;" />
 
-We’ll start with a simple hierarchy of bikes:
+We’ll start with a simple **hierarchy** of bikes:
 
-- A base class `Bike`.
-- Two subclasses:
-  - `Scooter`, where the final price is the base price multiplied by a coefficient.
-  - `Electric`, where the final price depends on the battery type:
-    - `250,000` for lithium batteries
-    - `120,000` for lead batteries
-    - `500,000` for anything else
+- A **base class** `Bike`.
+- **Two subclasses**:
+  - `Scooter`, where the final price is the **base price multiplied by a coefficient**.
+  - `Electric`, where the final price depends on the **battery type**:
+    - `250,000` for **lithium batteries**.
+    - `120,000` for **lead batteries**.
+    - `500,000` for **anything else**.
 
-We also define a `Dealership` class, which contains a collection of bikes and adds some business logic:
+We also define a `Dealership` class, which contains a **collection of bikes** and adds some **business logic**:
 
-- Get the brand of the first bike with a lithium battery.
-- Count the number of scooters whose base price is within a given range.
+- Get the brand of the **first bike with a lithium battery**.
+- Count the **number of scooters** whose **base price** is **within a given range**.
 
 ### Defining the Base Class
 
-We should begin implementing the `Bike` class, since it's the only one with no dependencies.
+We should begin implementing the `Bike` class, since it's the only one with **no dependencies**.
 
 ```smalltalk
 Object << #Bike
@@ -207,9 +209,9 @@ Bike >> finalPrice
   ^ self subclassResponsibility
 ```
 
-Here we define two attributes (`brand`, `origin`) and a placeholder method `finalPrice`, marked abstract using `subclassResponsibility`, whose implementation is left to subclasses.
+Here we define two attributes (`brand`, `origin`) and a **placeholder method** `finalPrice`, marked abstract using `subclassResponsibility`, whose **implementation is left to subclasses**.
 
-In Racket, we usually start by declaring an interface.
+In Racket, we usually start by declaring an **interface**.
 
 ```racket
 (define Bike<%>
@@ -221,10 +223,10 @@ In Racket, we usually start by declaring an interface.
     get-final-price))
 ```
 
-- The `<%>` suffix indicates an interface.
-- Methods ending in `!` are mutators (state-modifying), a strong Racket convention.
+- The `<%>` **suffix** indicates an **interface**.
+- Methods ending in `!` are **mutators** (state-modifying), a strong Racket convention.
 
-Now the class itself (by convention they end in `%`):
+Now the class itself (by convention they **end in `%`**).
 
 ```racket
 (define Bike%
@@ -242,14 +244,14 @@ Now the class itself (by convention they end in `%`):
     (abstract get-final-price)))
 ```
 
-- `class*` takes a parent class (`object%`) and a list of interfaces (`Bike<%>`).
-- `init-field` declares fields with optional default values.
-- `define/public` declares public methods (our getters and setters).
-- `abstract` marks methods that must be implemented in subclasses.
+- `class*` takes a **parent class** (`object%`) and a **list of interfaces** (`Bike<%>`).
+- `init-field` declares fields with optional **default values**.
+- `define/public` declares **public methods** (our getters and setters).
+- `abstract` marks methods that must be **implemented in subclasses**.
 
 ### Defining subclasses
 
-In Racket, we don’t need an interface here, just inherit from `Bike%`:
+We actually don’t need to use interfaces, so to define the `Scooter` subclass I will **just inherit** from `Bike%`
 
 ```racket
 (define Scooter%
@@ -267,12 +269,12 @@ In Racket, we don’t need an interface here, just inherit from `Bike%`:
     (define/override (get-final-price) (* base-price coefficient))))  ; final price = base × coefficient
 ```
 
-- We use `class` (not `class*`), since no interfaces are added.
-- `define/override` implements the abstract method from `Bike%`.
+- We use `class` (not `class*`), since **no interfaces** are added.
+- `define/override` implements the **abstract method** from `Bike%`.
 
 ---
 
-The `Electric` subclass differs only in how it calculates the price:
+The `Electric` subclass **differs** only in how it calculates **the price**.
 
 ```racket
 (define Electric%
@@ -291,11 +293,11 @@ The `Electric` subclass differs only in how it calculates the price:
         [else 500000]))))
 ```
 
-Here we use `case`, a convenient pattern-matching form.
+Here we use `case`, a convenient **pattern-matching form**.
 
 ### The `Dealership` Class
 
-First let's tackle the structure of our `Dealership` class.
+First let's tackle the **structure** of our `Dealership` class.
 
 ```smalltalk
 Object << #Dealership
@@ -312,7 +314,7 @@ Dealership >> addBike: aBike
 ```
 
 We represent the collection of bikes as a list.
-Adding a bike is done with `cons`, which adds an element to the front of a list.
+Adding a bike is done with `cons`, which adds an element to the **front of a list**.
 
 ```racket
 (define Dealership%
@@ -329,7 +331,7 @@ Adding a bike is done with `cons`, which adds an element to the front of a list.
 
 Before diving into the business logic, let's pause to understand how Racket handles **message passing**.
 
-In Racket’s class system, you invoke a method on an object with `send`:
+In Racket’s class system, you **invoke a method** on an object with `send`.
 
 ```racket
 (send <object> <method-name> arg ...)
@@ -342,7 +344,7 @@ So in our domain we could write something like this:
 (send bike get-final-price)
 ```
 
-We can also use `send` with `this` (the current instance) to call another method of the same object, or `super` to call the superclass's version:
+We can also use `send` with `this` (the **current instance**) to call another method of the **same object**, or `super` to call the **superclass's version**.
 
 ```racket
 (define/public (price-with-tax)
@@ -352,7 +354,7 @@ We can also use `send` with `this` (the current instance) to call another method
 
 #### Get the brand of the first bike with a lithium battery
 
-In Pharo, this method finds the first electric bike with a lithium battery and returns its brand.
+In Pharo, this method **detects** the first electric bike with a lithium battery and returns its brand.
 
 ```smalltalk
 Dealership >> getBrandFirstLithium
@@ -364,8 +366,8 @@ Dealership >> getBrandFirstLithium
     ifNone: []
 ```
 
-To migrate this to Racket we use the `for/first` form, which iterates over a list and returns the first value for which the body is not `#f`.
-`is-a?` checks class membership to avoid calling the wrong method at runtime.
+To migrate this to Racket we use the `for/first` form, which **iterates over a list** and returns the **first value** for which the body is not `#f`.
+`is-a?` checks **class membership** to avoid calling the **wrong method** at runtime.
 
 ```racket
 (define/public (get-brand-first-lithium)
@@ -376,8 +378,8 @@ To migrate this to Racket we use the `for/first` form, which iterates over a lis
 
 #### Count scooters within a price range
 
-Finding this value in Pharo reads almost like English.
-We select all the bikes with a base price between two values, and then we retrieve the size of the resulting collection.
+Finding this value in Pharo **reads almost like English**.
+We **select** all the bikes with a base price between two values, and then we retrieve the **size** of the resulting collection.
 
 ```smalltalk
 Dealership >> countScootersBetween: minimum and: maximum
@@ -388,7 +390,7 @@ Dealership >> countScootersBetween: minimum and: maximum
     size
 ```
 
-In Racket, we can use `for/sum` to iterate over the list and sum up `1` for each bike that meets the criteria.
+In Racket, we can use `for/sum` to **iterate over the list** and **sum** up `1` for each bike that meets the criteria.
 
 ```racket
 (define/public (count-scooters-between minimum maximum)
@@ -411,59 +413,367 @@ Here's a quick demo:
 (displayln (send d count-scooters-between 40000 60000))  ; 1
 ```
 
-Despite different syntax, idioms and conventions, we can appreciate many OOP concepts both in Racket and Pharo.
-
-The main pain point here is losing how close to natural language Smalltalk reads, but the concepts are surprisingly close.
+Despite **different syntax, idioms and conventions**, we can appreciate many OOP concepts both in Racket and Pharo.
+The main **pain point** here is losing how **close to natural language** Smalltalk reads, but the concepts are surprisingly similar.
 
 ## Logic Programming
 
-Here I created a small use case to showcase Logic Programming.
+Here I created a small use case to showcase **Logic Programming**.
 
-This is the **courses** table:
+This is the **foods**, table:
 
-| Code | Name                    | Capacity | Hours | Category                         |
-|------|-------------------------|----------|-------|----------------------------------|
-| C101 | Programming 1           | 80       | 6     | [Mandatory, Development]         |
-| C102 | Programming Paradigms   | 50       | 4     | [Mandatory, Development]         |
-| C103 | Artificial Intelligence | 15       | 3000  | [Elective, Development, Science] |
-| C104 | Computer Networks       | 1        | 800   | [Mandatory, Support]             |
+| Code | Name   | Stock | Branch | Category        |
+|:----:|--------|------:|-------:|-----------------|
+| 1    | Milk   | `200` | `1`    | Dairy, Drink    |
+| 2    | Donut  | `120` | `2`    | Bakery          |
+| 3    | Yogurt | `75`  | `3`    | Dairy           |
+| 4    | Coffee | `50`  | `1`    | Drink, Imported |
 
-Here we got the **rooms** table:
+Here we got the **branches** table:
 
-| Code  | Name            | Capacity |
-|-------|-----------------|----------|
-| R1    | Main Hall       | 120      |
-| R2    | Laboratory 1    | 40       |
-| R3    | Laboratory 2    | 35       |
-| R4    | Conference Room | 60       |
+| Code | Name    |
+|:----:|---------|
+| 1    | Central |
+| 2    | East    |
+| 3    | West    |
 
-And finally, this is the **dictations** table:
+And finally, this is the **orders** table:
 
-| Code | Room |
-|------|------|
-| 1    | R3   |
-| 2    | R2   |
-| 3    | R4   |
-| 4    | R1   |
+| Code  | Food | Carrier | Date         | Quantity | Price    |
+|:-----:|-----:|---------|--------------|---------:|---------:|
+| 1     | `2`  | Anne    | `10/12/2025` | `120`    | `1,000`  |
+| 2     | `3`  | Peter   | `05/15/2025` | `40`     | `22,000` |
+| 3     | `1`  | Lucy    | `07/20/2025` | `35`     | `17,300` |
+| 4     | `4`  | John    | `03/25/2025` | `60`     | `50,000` |
 
-If we were to translate this to **Prolog**, we would have:
+The objective is to write **two rules**:
+
+- Find **all the orders** of **May** where the **stock** is already **above `100`**, and also show the **unitary price** of the food.
+- Find for a **certain category**, **all the foods** stored in the **Central branch** whose **stock** is **below `100`**.
+
+### Defining the facts
+
+Translating this to **Prolog**, is just a matter of writing down the statements.
 
 ```prolog
-% curso(codigoCurso, nombre, cupo, horasSemanales, categorias)
-curso("C101", "Programacion I", 80, 6, ["Obligatoria", "Desarrollo"]).
-curso("C102", "Paradigmas de Programacion", 50, 4, ["Obligatoria", "Desarrollo"]).
-curso("C103", "Inteligencia Artificial", 30, 5, ["Electiva", "Ciencia", "Desarrollo"]).
-curso("C104", "Redes de Computadoras", 40, 5, ["Obligatoria", "Soporte"]).
+%! food(+Code:int, +Name:atom, +Stock:int, +Branch:int, +Categories:list(atom)) is det.
+food(1, 'Milk',  200, 1, ['Dairy', 'Drink']).
+food(2, 'Donut', 120, 2, ['Bakery']).
+food(3, 'Yogurt', 75, 3, ['Dairy']).
+food(4, 'Coffee', 50, 1, ['Drink', 'Imported']).
 
-% aula(codigoAula, nombreAula, capacidad)
-aula(1,"Aula Magna",120).
-aula(2,"Laboratorio 1",40).
-aula(3,"Laboratorio 2",35).
-aula(4,"Sala de Conferencias",60).
+%! branch(+Code:int, +Name:atom) is det.
+branch(1, 'Central').
+branch(2, 'Este').
+branch(3, 'Oeste').
 
-% Relación curso-aula (cada curso se dicta en un aula determinada)
-dictado("C101",1).
-dictado("C102",2).
-dictado("C103",4).
-dictado("C104",3).
+%! order(+Code:int, +Food:int, +Carrier:atom, +Date:date, +Quantity:int, +Price:int) is det.
+order(1, 2, 'Anne',  date(5, 12, 2025), 100,  1000).
+order(2, 3, 'Peter', date(7, 15, 2025), 150, 22000).
+order(3, 1, 'Lucy',  date(9, 20, 2025), 200, 17300).
+order(4, 4, 'John',  date(2, 25, 2025), 50,  50000).
 ```
+
+The comments over the facts follow the **PlDoc** specification, a structured comment format that documents Prolog code.
+It describes **predicates**, their **arguments**, expected **types**, input/output **modes**, and **determinism**, to generate **browsable HTML docs**.
+
+The predicate **headers** start with `%!` (or `%%` for private predicates).
+Next, argument **modes** describe how each argument **should be used**:
+
+- `+` means it is an **input** variable that must be instantiated when calling.
+- `-` means it is an **output** variable that will be bound by the predicate.
+- `?` means it is **either** an input or output variable.
+
+Then we declare the variable **type** with type specifiers (`int`, `atom`, `string`, `list(T)`, etc.).
+And lastly, we document the **determinism**, or how many solutions the predicate may produce:
+
+- `is det.` means the predicate is deterministic: it produces exactly **one solution**, without choice-points.
+- `is semidet.` means it **succeeds once or fails**.
+- `is multi` means it produces **one or more solutions**.
+
+---
+
+To approach this in **Racket**, first we need to require the embedded Prolog engine.
+
+```racket
+#lang racket
+(require racklog)
+```
+
+Once that's done, we can start writing **facts** in a similar fashion.
+
+```racket
+(define %food
+  (%rel (Code Name Stock Branch Categories)
+        [(1 'Milk 200 1 '(Dairy Drink))]
+        [(2 'Donut 120 2 '(Bakery))]
+        [(3 'Yogurt 75 3 '(Dairy))]
+        [(4 'Coffee 50 1 '(Drink Imported))]))
+
+(define %branch (%rel (Code Name) [(1 'Central)] [(2 'East)] [(3 'West)]))
+
+(define %order
+  (%rel (Code Food Carrier Date Quantity Price)
+        [(1 2 'Anne '(date 5 12 2025) 100 1000)]
+        [(2 3 'Peter '(date 7 15 2025) 150 22000)]
+        [(3 1 'Lucy '(date 9 20 2025) 200 17300)]
+        [(4 4 'John '(date 2 25 2025) 50 50000)]))
+```
+
+### The queries
+
+#### Getting all overstocked food of May
+
+Since there is only one food that matches the criteria, the result of the first query should look like this:
+
+```
+?- overstocked_may_food(Cod, UnitaryPrice).
+Code = 1,
+UnitaryPrice = 10.
+```
+
+Implementing this in Prolog is a matter of stating the **constrains** of the problem:
+
+```prolog
+%! may_overstocked_orders(-Code:int, -UnitaryPrice:number) is multi.
+may_overstocked_orders(Code, UnitaryPrice) :-
+  order(Code, Food, _, date(5, _, _), Quantity, Price),
+  food(Food, _, Stock, _, _),
+  Stock >= 100,
+  Quantity > 0,
+  UnitaryPrice is Price / Quantity.
+```
+
+And the translation to Racket is literally the same, with some **syntactic adjustments** to work around Racket's **evaluation system**:
+
+```racket
+(define %may-overstocked-orders
+  (%rel (code unitary-price food quantity price stock)
+        [(code unitary-price)
+         (%order code food (_) `(date 5 ,(_) ,(_)) quantity price)
+         (%food food (_) stock (_) (_))
+         (%>= stock 100)
+         (%> quantity 0)
+         (%is unitary-price (/ price quantity))]))
+```
+
+#### Getting all the understocked food in the Central branch
+
+Here is an example of how the other query should look:
+
+```
+?- understocked_food_in_central('Drink', Foods).
+Foods = ['Coffee'].
+```
+
+And to solve we basically use `findall/3`, which takes:
+
+- A **template**, or how it will fill the resulting list.
+- The **goal** that has to be reached.
+- The **output** variable to be assigned.
+
+```prolog
+%! understocked_food_in_central(+Category:atom, -Foods:list(atom)) is det.
+understocked_food_in_central(Category, Foods) :-
+  findall(Name,
+          ( food(_, Name, Stock, Branch, Categories),
+            branch(Branch, 'Central'),
+            Stock =< 100,
+            member(Category, Categories)
+          ),
+          Foods).
+```
+
+Porting this to Racket is almost trivial:
+
+```racket
+(define %understocked-food-in-central
+  (%rel (category foods name stock branch categories)
+        [(category foods)
+         (%bag-of name
+                  (%and (%food (_) name stock branch categories)
+                        (%branch branch 'Central)
+                        (%<= stock 100)
+                        (%member category categories))
+                  foods)]))
+```
+
+### See to believe
+
+Just to be sure we are going to run these queries:
+
+<!-- TODO: -->
+
+```racket
+(module+ main
+  (printf "example a — may_overstocked_orders:\n")
+  (let ([ans (%which (code price) (%may-overstocked-orders code price))])
+    (displayln ans)
+    (let loop ()
+      (define more (%more))
+      (when more
+        (displayln more)
+        (loop))))
+
+  (printf "\nexample b — understocked_food_in_central for 'drink:\n")
+  (let ([ans2 (%which (foods) (%understocked-food-in-central 'drink foods))])
+    (displayln ans2)
+    (let loop ()
+      (define more (%more))
+      (when more
+        (displayln more)
+        (loop)))))
+```
+
+With this you can see that Logic Programming done in Racket is basically the same as Prolog, albeit minor syntax changes.
+
+## Functional Programming
+
+Now let's explore **Functional Programming**, coming from **Haskell**.
+
+We will imagine a **streaming platform** that offers different **subscription plans**.
+The next **table** shows the pricings:
+
+| Code   | Name     | Price   |
+|:------:|----------|---------|
+| `B`    | Basic    | `1,000` |
+| `S`    | Standard | `2,000` |
+| `P`    | Premium  | `3,000` |
+| `F`    | Family   | `4,000` |
+
+We need to:
+<!-- TODO: improve phrasing -->
+- **Represent** the table into a function.
+- Given a list of plan codes, **count** all planes that have a **specific code**.
+- **Filter** the plans **below a price**.
+
+### Encoding
+
+There are actually **three ways** to encode the table in Haskell.
+The first is to use **pattern-matching**.
+
+```haskell
+planPrice :: String -> Int
+planPrice "B" = 1000
+planPrice "S" = 1000
+planPrice "P" = 1000
+planPrice "F" = 1000
+planPrice _   = 0
+```
+
+The second is to use **guards**.
+
+```haskell
+planPrice :: String -> Int
+planPrice code
+  | code == "B" = 1000
+  | code == "S" = 2000
+  | code == "P" = 3000
+  | code == "F" = 4000
+  | otherwise   = 0
+```
+
+Nonetheless, both will be **desugared** by the compiler into a **case expression**.
+
+```haskell
+planPrice :: String -> Int
+planPrice code = case code of
+  "B" -> 1000
+  "S" -> 2000
+  "P" -> 3000
+  "F" -> 4000
+  _   -> 0
+```
+
+---
+
+For these problems we are going to use **Typed Racket**, the language built on top of base Racket that enforces type checking by **changing how code is evaluated**.
+
+```racket
+#lang typed/racket
+```
+
+Now every function **has** to be annotated.
+We saw that the first function takes a `String` as input and returns an `Int` as output.
+
+```racket
+(: plan-price (-> String Integer))
+```
+
+Then we will complete by following right up with the function **implementation**.
+
+```racket
+(define (plan-price codigo)
+  (match codigo
+    ["B" 1000]
+    ["S" 2000]
+    ["P" 3000]
+    ["F" 4000]
+    [_ 0]))
+```
+
+### Counting
+
+To count **how many plans do I have with a specific code**, we will use **recursion**.
+
+The **base case** (or **trivial**) is when I have **no plans**, and the answer is obviously `0`.
+
+The **recursive case** basically consists in checking **plan by plan**.
+We will take the **first one**, and if the code is the one we are looking for, we **add one** to **how many plans I find in the rest**.
+Otherwise we keep searching.
+
+```haskell
+countPlans :: [String] -> String -> Int
+countPlans [] _ = 0
+countPlans (x:xs) code
+  | x == code = 1 + countPlans  xs code
+  | otherwise = countPlans xs code
+```
+
+In Racket there are a couple of other, more **idiomatic ways** (namely `count` or `for/count`), but we will stick to the original implementation.
+
+```racket
+(: count-plans (-> (Listof String) String Integer))
+(define (count-plans plans code)
+  (match plans
+    ['() 0]
+    [(cons plan tail)
+     (if (string=? plan code)
+         (add1 (count-plans tail code))
+         (count-plans tail code))]))
+```
+
+### Filtering
+
+Filtering in Haskell can be done with **list comprehensions**.
+
+```haskell
+filtrarPlanes :: [Int] -> Int -> [Int]
+filtrarPlanes precios ref = [p | p <- precios, p <= ref]
+```
+
+This **elegant** syntax follows **mathematical notation**.
+
+$$
+\{\, p \in P \mid p < r \,\}
+$$
+
+In Racket we can use the `for/list` form, that reads as follows.
+
+```racket
+(: filtrar-planes (-> (Listof Integer) Integer (Listof Integer)))
+(define (filtrar-planes precios ref)
+  (for/list : (Listof Integer)
+    ([p (in-list precios)] #:when (<= p ref))
+    p))
+```
+
+We can see that Functional Programming, along with **all the other paradigms**, are **well supported** and consistent in Racket.
+
+But what about that beautiful **list comprehension syntax** from Haskell?
+Is it **gone forever?**
+
+As you can imagine the answer is **no**.
+For that we turn to the defining paradigm of all LISPs:
+
+## Reflective Programming

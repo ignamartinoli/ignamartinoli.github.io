@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
+/* @import "tailwindcss"; */
+/* @import "@catppuccin/tailwindcss/macchiato.css"; */
+
 :root {
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
@@ -302,4 +305,8 @@ caption {
   font-weight: 600;
   color: var(--lavender);
   padding: 0 0 0.5rem 0.25rem;
+}
+
+.dark {
+
 }
