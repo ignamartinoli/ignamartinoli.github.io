@@ -138,9 +138,9 @@ input {
 	font-size: 16px;
 }
 
-table {
-	width: 100%;
-}
+/* table { */
+/* 	width: 100%; */
+/* } */
 
 img {
 	border-radius: 8px;
@@ -228,16 +228,25 @@ hr {
 
 /* Core table */
 table {
-  width: 100%;
+  /* important mobile bits */
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5rem 0;
+
   border-collapse: separate;
   border-spacing: 0;
+
   background: var(--glass-bg);
   border: 1px solid var(--glass-stroke);
   border-radius: 0.875rem;
   box-shadow: var(--glass-shadow);
   -webkit-backdrop-filter: blur(14px) saturate(120%);
   backdrop-filter: blur(14px) saturate(120%);
-  overflow: hidden; /* clip rounded corners */
+
+  /* 🔑 key changes */
+  width: max-content;  /* shrink-wrap to content */
 }
 
 /* Fallback when blur isn’t supported */

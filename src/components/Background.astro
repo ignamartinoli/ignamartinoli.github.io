@@ -31,7 +31,8 @@ const { enableMouseInteraction = true } = Astro.props;
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100vh;
+		height: 100vh;   /* fallback for older browsers */
+		height: 100dvh;  /* dynamic vh for mobile browsers */
 		z-index: -1;
 		background: linear-gradient(135deg, var(--base), var(--mantle), var(--crust));
 		overflow: hidden;
