@@ -1006,9 +1006,9 @@ Let's use Racket's unit tests module to play around with it:
   ;; constants
   (check-equal? (list-comp 42 (< 1 2))
                 '(42))
-  ;; 
-  (check-equal? (list-comp n [n <- (.. 2 10 2)])
-                '(2 4 6 8 10)))
+  ;; descending range
+  (check-equal? (list-comp n [n <- (.. 10 2 -2)])
+                '(10 8 6 4 2)))
 ```
 
 And the result:
