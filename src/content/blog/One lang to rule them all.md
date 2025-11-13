@@ -9,7 +9,7 @@ heroImage: '../../assets/racket.png'
 
 <img src="/Racket-logo.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 10em;" />
 
-Recently, I’ve been teaching **Programming Paradigms** at my university.
+Recently, I've been teaching **Programming Paradigms** at my university.
 The course is designed to give students a broad view of the three most influential paradigms in modern programming.
 
 For each paradigm, we use a language that best represents its philosophy:
@@ -39,7 +39,7 @@ It could even open the door to a **fourth paradigm** at the same time.
 
 <img src="/Lisp_logo.svg" alt="kitty logo" style="float: right; margin-left: 1em; width: 10em;" />
 
-**Lisp** (short for "**Lis**t **P**rocessing") is a **family of programming languages** sparked from **John McCarthy**’s research on **symbolic computation** in 1958.
+**Lisp** (short for "**Lis**t **P**rocessing") is a **family of programming languages** sparked from **John McCarthy**'s research on **symbolic computation** in 1958.
 The original implementation is the **second oldest** high-level language, closely after **Fortran**.
 
 [Paul Graham](https://en.wikipedia.org/wiki/Paul_Graham_(programmer)) identified nine **important aspects** of Lisp that **distinguished** it from existing languages like **Fortran**. The **most relevant** for our adventure now are:
@@ -109,7 +109,8 @@ These operators are often called `first`/`rest` or `head`/`tail` in other high-l
 (string-append "ra" "cket")  ; -> "racket"
 ```
 
-Not every list denotes a procedure call: some begin with a **keyword** (a **special form**) that has its own evaluation rules. For example:
+Not every list denotes a procedure call, some begin with a **keyword** (a **special form**) that has its own evaluation rules.
+For example:
 
 ```racket
 (define x 10)         ; binding form (special form), not a function call
@@ -142,7 +143,7 @@ You can inspect the data structure programmatically.
 (symbol? (car '(+ 1 2)))  ; is the first element the symbol '+? -> #t
 ```
 
-In summary, here’s what **code vs data** look like:
+In summary, here's what **code vs data** look like:
 
 ```racket
 #lang racket
@@ -164,7 +165,7 @@ Let's use this **Class Diagram** to illustrate the migration from one language t
 
 <img src="/OOP.drawio.svg" alt="kitty logo" style="width: 100%;" />
 
-We’ll start with a simple **hierarchy** of bikes:
+We'll start with a simple **hierarchy** of bikes:
 
 - A **base class** `Bike`.
 - **Two subclasses**:
@@ -251,7 +252,7 @@ Now the class itself (by convention they **end in `%`**).
 
 ### Defining subclasses
 
-We actually don’t need to use interfaces, so to define the `Scooter` subclass I will **just inherit** from `Bike%`
+We actually don't need to use interfaces, so to define the `Scooter` subclass I will **just inherit** from `Bike%`
 
 ```racket
 (define Scooter%
@@ -331,7 +332,7 @@ Adding a bike is done with `cons`, which adds an element to the **front of a lis
 
 Before diving into the business logic, let's pause to understand how Racket handles **message passing**.
 
-In Racket’s class system, you **invoke a method** on an object with `send`.
+In Racket's class system, you **invoke a method** on an object with `send`.
 
 ```racket
 (send <object> <method-name> arg ...)
@@ -777,3 +778,253 @@ As you can imagine the answer is **no**.
 For that we turn to the defining paradigm of all LISPs:
 
 ## Reflective Programming
+
+Racket is a language that gives you **control over its own structure and behaviour**.
+Thanks to the powerful **macro system**, you can create **new syntax** that looks and behaves just like built-in features, letting you **design new languages**.
+
+While in most languages, code runs only **after** it's written, with Racket's macros code can also **run while it's being read**.
+A macro is a function that **transforms code before it's executed**, by rewriting **syntax objects** into something Racket already understands.
+
+That means you can define **new syntax constructs** without worrying about **variable capture** or **name clashes**.
+
+---
+
+Our goal is **to embed** the Haskell syntax for **list-comprehension**
+
+```haskell
+[x * x | x <- [1..10], even x]
+```
+
+### Defining an Inclusive Range Function
+
+First, we'll replicate Haskell's syntax for **creating inclusive ranges** (like `[1..10]`)
+
+```racket
+(define (.. a b . maybe-step)
+  (define step
+    (cond
+      [(pair? maybe-step) (car maybe-step)]
+      [(<= a b) 1]
+      [else -1]))
+  (cond
+    [(zero? step) (error '.. "step must be non-zero")]
+    [(and (> step 0) (> a b)) (in-range a a step)]
+    [(and (< step 0) (< a b)) (in-range a a step)]
+    [(> step 0) (in-range a (add1 b) step)]
+    [else (in-range a (sub1 b) step)]))
+```
+
+<!-- This supports: -->
+<!---->
+<!-- - Inclusive endpoints -->
+<!-- - Optional steps -->
+<!-- - Ascending and descending sequences -->
+
+Here we basically set `step` as the value passed by the caller if present, or set it to `1` or `-1` for ascending or descending ranges.
+
+Then we do a basic validation and go about creating ranges with the `in-range` built-in.
+
+The result can be seen with
+
+```racket
+(for/list ([n (.. 10 2 -2)]) n)  ; '(10 8 6 4 2)
+```
+
+### Understanding Macros
+
+Macros in Racket are **code transformers**.
+They take **syntax as input** and produce **new syntax** that Racket then runs as normal code.
+
+You can think of them as **functions that run before your program does**, but they operate on syntax objects, not data.
+
+The simplest way to write one is with `define-syntax-rule`, which lets you define pattern-based rewrites.
+For example:
+
+```racket
+#lang racket
+
+(define-syntax-rule (when-not cond body ...)
+  (when (not cond) body ...))
+
+(when-not #f (displayln "Runs!"))
+```
+
+This macro expands `(when-not cond body ...)` into `(when (not cond) body ...)`.
+
+<!-- TODO: explain evaluation and #' -->
+
+### Tackling the problem
+
+A proposed syntax for list comprehension can be something like this:
+
+```racket
+(list-comp (* x x)
+           [x <- (.. 1 10)]
+           (even? x))
+;; '(4 16 36 64 100)
+```
+
+If we pay attention we can see that conceptually it is made of:
+
+- The **body** (`(* x x)`) that describes what to produce
+- Then **clauses**, that could either be:
+  - **Generators**: `[x <- (.. 1 10)]`
+  - **Guards**: `(even? x)`
+
+We'll parse clauses and expand these into Racket's built-in comprehension form: the `for*/list` loop.
+
+### Starting from the parts
+
+We'll define a **syntax class** `comp-clause` that understands both generators and guards.
+Basically it behaves as a **mini parse**.
+
+Inside a `begin-for-syntax` block (so it **runs at macro-expansion time**):
+
+<!-- TODO: choose better -->
+<!-- TODO: explain datum and shit -->
+
+```racket
+(begin-for-syntax
+  (define-syntax-class comp-clause
+    #:attributes (pieces binds?)
+    #:datum-literals (<-)
+
+    ;; Generator: [pat <- seq]
+    (pattern [pat:expr <- seq:expr]
+      #:with tmp (generate-temporary #'pat)
+      #:with pieces #'([tmp seq] #:when (match tmp
+                                          [pat #t]
+                                          [_ #f])
+                                 #:do [(match-define pat tmp)])
+      #:with binds? #'#t)
+
+
+    ;; Guard: bare expression
+    (pattern g:expr
+      #:with pieces #'(#:when g)
+      #:with binds? #'#f)))
+
+(begin-for-syntax
+  (define-syntax-class comp-clause
+    #:attributes (pieces binds?)
+    #:datum-literals (<-)
+
+    ;; Generator: [pat <- seq]
+    (pattern [pat:expr <- seq:expr]
+      #:with tmp (generate-temporary #'pat)
+      #:with pieces
+      #'([tmp seq]
+         #:when (match tmp [pat #t] [_ #f])
+         #:do [(match-define pat tmp)])
+      #:with binds? #'#t)
+
+    ;; Guard: bare expression
+    (pattern g:expr
+      #:with pieces #'(#:when g)
+      #:with binds? #'#f)))
+```
+
+Here's what's happening:
+
+- We define how to parse two clause types.
+- Generators create temporary bindings (`tmp`) and use pattern matching.
+- Guards just translate into `#:when` filters.
+- The `pieces` attribute describes what goes into a `for*/list` comprehension later.
+- `binds?` tracks whether any generator was found (so we can handle the case of only guards).
+
+---
+
+Next, we'll need some utility functions that help us flatten and check clause syntax.
+
+So inside the `begin-for-syntax`, after `define-syntax-class`, we'll add:
+
+```racket
+(begin-for-syntax
+  ;; (define-syntax-class comp-clause
+  ;; ...
+  ;;       #:with binds? #'#f)))
+
+  (define (flatten-pieces stx-list)
+    (apply append (map syntax->list stx-list)))
+
+  (define (any-true? stxes)
+    (for/or ([s (in-list stxes)]) (syntax-e s))))
+```
+
+<!-- TODO: explain -->
+
+### The solution
+
+Finally we will rely heavily on `syntax-parse`, Racket's advanced macro system.
+
+Basically we:
+
+1. Collect the body and all clauses.
+2. Expand the clauses into `for*/list` syntax.
+3. Handle the case where no generators are present (guards only).
+
+```racket
+(define-syntax (list-comp stx)
+  (syntax-parse stx
+    [(_ body:expr q:comp-clause ...)
+     (define flat (flatten-pieces (syntax->list #'(q.pieces ...))))
+     (define has-bind? (any-true? (syntax->list #'(q.binds? ...))))
+     (with-syntax ([(clauses ...) flat])
+       (cond
+         [has-bind?
+          #'(for*/list (clauses ...)
+              body)]
+         [else
+          ;; No generators: add a dummy binding so guards-only work
+          #'(for*/list ([_ '(#t)]
+                        clauses ...)
+              body)]))]))
+```
+
+At this point, the macro is complete!
+
+### Battle testing it
+
+Let's use Racket's unit tests module to play around with it:
+
+```racket
+(module+ test
+  (require rackunit)
+
+  ;; simple
+  (check-equal? (list-comp x [x <- (.. 1 5)] (even? x))
+                '(2 4))
+  ;; pairs
+  (check-equal? (list-comp (list x y) [x <- '(1 2)] [y <- '(3 4)])
+                '((1 3) (1 4) (2 3) (2 4)))
+  ;; variables
+  (check-equal? (list-comp x [x <- (.. 1 10)] [let ([num 5]) (= num x)])
+                '(5))
+  ;; only the first part of a pair
+  (check-equal? (list-comp a [(list a b) <- '((1 5) (4 2))] (= (+ a b) 6))
+                '(1 4))
+  ;; constants
+  (check-equal? (list-comp 42 (< 1 2))
+                '(42))
+  ;; 
+  (check-equal? (list-comp n [n <- (.. 2 10 2)])
+                '(2 4 6 8 10)))
+```
+
+And the result:
+
+```text
+❯ raco test list-comp.rkt
+raco test: (submod (file "list-comp.rkt") test)
+6 tests passed
+```
+
+### Going further
+
+I hope this showcase can be useful to better understand programming paradigms and the power of homoiconic languages.
+
+As an exercise you could try to extend this rule to add an `unless` guard.
+
+First you would need to declare it into the `#:datum-literals`, and then add a `pattern`.
+
+Have fun trying!
