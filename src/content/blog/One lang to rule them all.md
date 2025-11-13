@@ -5,7 +5,7 @@ pubDate: 'Oct 09 2025'
 heroImage: '../../assets/racket.png'
 ---
 
-## Table of Contents
+<!-- ## Table of Contents -->
 
 <img src="/Racket-logo.svg" alt="kitty logo" style="float: left; margin-right: 1em; width: 10em;" />
 
@@ -603,11 +603,11 @@ Porting this to Racket is almost trivial:
 
 Just to be sure we are going to run these queries:
 
-<!-- TODO: -->
+<!-- TODO: explain a bit -->
 
 ```racket
 (module+ main
-  (printf "example a — may_overstocked_orders:\n")
+  (printf "example a: may_overstocked_orders:\n")
   (let ([ans (%which (code price) (%may-overstocked-orders code price))])
     (displayln ans)
     (let loop ()
@@ -616,7 +616,7 @@ Just to be sure we are going to run these queries:
         (displayln more)
         (loop))))
 
-  (printf "\nexample b — understocked_food_in_central for 'drink:\n")
+  (printf "\nexample b: understocked_food_in_central for 'drink:\n")
   (let ([ans2 (%which (foods) (%understocked-food-in-central 'drink foods))])
     (displayln ans2)
     (let loop ()
@@ -643,6 +643,7 @@ The next **table** shows the pricings:
 | `F`    | Family   | `4,000` |
 
 We need to:
+
 <!-- TODO: improve phrasing -->
 - **Represent** the table into a function.
 - Given a list of plan codes, **count** all planes that have a **specific code**.
@@ -780,7 +781,10 @@ For that we turn to the defining paradigm of all LISPs:
 ## Reflective Programming
 
 Racket is a language that gives you **control over its own structure and behaviour**.
-Thanks to the powerful **macro system**, you can create **new syntax** that looks and behaves just like built-in features, letting you **design new languages**.
+A key reason for this is its **homoiconic** design: in Racket, **code is represented using the same data structures that the language itself provides**.
+Because programs are built from ordinary data—lists, symbols, and structured syntax objects, you can **inspect, construct, and transform code just as easily as any other value**.
+
+This foundation enables Racket's powerful **macro system**, that lets you create **new syntax** that looks and behaves just like built-in constructs, giving you the tools to **design new languages** tailored to your domain.
 
 While in most languages, code runs only **after** it's written, with Racket's macros code can also **run while it's being read**.
 A macro is a function that **transforms code before it's executed**, by rewriting **syntax objects** into something Racket already understands.
@@ -851,8 +855,6 @@ For example:
 
 This macro expands `(when-not cond body ...)` into `(when (not cond) body ...)`.
 
-<!-- TODO: explain evaluation and #' -->
-
 ### Tackling the problem
 
 A proposed syntax for list comprehension can be something like this:
@@ -861,7 +863,7 @@ A proposed syntax for list comprehension can be something like this:
 (list-comp (* x x)
            [x <- (.. 1 10)]
            (even? x))
-;; '(4 16 36 64 100)
+; '(4 16 36 64 100)
 ```
 
 If we pay attention we can see that conceptually it is made of:
@@ -880,9 +882,6 @@ Basically it behaves as a **mini parse**.
 
 Inside a `begin-for-syntax` block (so it **runs at macro-expansion time**):
 
-<!-- TODO: choose better -->
-<!-- TODO: explain datum and shit -->
-
 ```racket
 (begin-for-syntax
   (define-syntax-class comp-clause
@@ -892,28 +891,7 @@ Inside a `begin-for-syntax` block (so it **runs at macro-expansion time**):
     ;; Generator: [pat <- seq]
     (pattern [pat:expr <- seq:expr]
       #:with tmp (generate-temporary #'pat)
-      #:with pieces #'([tmp seq] #:when (match tmp
-                                          [pat #t]
-                                          [_ #f])
-                                 #:do [(match-define pat tmp)])
-      #:with binds? #'#t)
-
-
-    ;; Guard: bare expression
-    (pattern g:expr
-      #:with pieces #'(#:when g)
-      #:with binds? #'#f)))
-
-(begin-for-syntax
-  (define-syntax-class comp-clause
-    #:attributes (pieces binds?)
-    #:datum-literals (<-)
-
-    ;; Generator: [pat <- seq]
-    (pattern [pat:expr <- seq:expr]
-      #:with tmp (generate-temporary #'pat)
-      #:with pieces
-      #'([tmp seq]
+      #:with pieces #'([tmp seq]
          #:when (match tmp [pat #t] [_ #f])
          #:do [(match-define pat tmp)])
       #:with binds? #'#t)
@@ -927,16 +905,54 @@ Inside a `begin-for-syntax` block (so it **runs at macro-expansion time**):
 Here's what's happening:
 
 - We define how to parse two clause types.
-- Generators create temporary bindings (`tmp`) and use pattern matching.
-- Guards just translate into `#:when` filters.
+- Each clause (`q:comp-clause`) produces **attributes** that our main macro can access.
+- We declare that **generators** look like `[pattern <- sequence]`
+  - We create a temporary variable (`tmp`) to hold each value from the sequence.
+  - Then, we use `match` and `match-define` to destructure it.
+- Guards are just booleans like `(even? x)`, so we translate them into `#:when` filters.
 - The `pieces` attribute describes what goes into a `for*/list` comprehension later.
 - `binds?` tracks whether any generator was found (so we can handle the case of only guards).
 
----
+#### A quick detour
 
-Next, we'll need some utility functions that help us flatten and check clause syntax.
+You'll notice **syntax quoting** everywhere, like `#'([tmp seq])`.
 
-So inside the `begin-for-syntax`, after `define-syntax-class`, we'll add:
+This is like a regular quote (`'`), but it **preserves syntax objects** (which contain source locations, bindings and scope information), not raw data.
+
+Let's see the difference:
+
+```racket
+(quote (x y))  ; -> '(x y)
+#'(x y)        ; -> a syntax object representing the code (x y)
+```
+
+- The first is just **data**: Racket treats it like a list of symbols.
+- The second is **syntax**: Racket knows **where** it came from in your program and **what** each identifier refers to.
+
+Using syntax quotes ensures your macro works **hygienically**, without **variable capture** or **namespace issues**.
+
+Imagine you wrote a macro that introduces a variable `tmp` inside its expansion.
+What happens if the user's code also has a `tmp`?
+
+Without protection, your macro might accidentally shadow their variable, changing its meaning.
+
+When you use syntax quoting (`#'`) and `generate-temporary`, Racket prevents that by ensuring the new identifiers you create don't interfere with user code.
+So even if both you and the user have a variable called `tmp`, they remain distinct behind the scenes.
+
+### A helping hand
+
+After parsing multiple clauses, we'll have lists of syntax pieces like:
+
+```racket
+#'([x (.. 1 10)] #:when (even? x))
+```
+
+These come in as nested syntax objects, not flat lists.
+To feed them into `for*/list`, we need to flatten them.
+
+Similarly, we'll want to know whether the comprehension includes any generator clauses (to handle the case of guards-only comprehensions).
+
+So inside the `begin-for-syntax`, after `define-syntax-class`, we'll add these helpers:
 
 ```racket
 (begin-for-syntax
@@ -951,11 +967,14 @@ So inside the `begin-for-syntax`, after `define-syntax-class`, we'll add:
     (for/or ([s (in-list stxes)]) (syntax-e s))))
 ```
 
-<!-- TODO: explain -->
+To clarify:
+
+- `syntax->list` unwraps a syntax object that contains a list-like form (e.g., `#'([a b])`) into actual sub-syntaxes.
+- `syntax-e` extracts the underlying datum (like `#t`, `#f`, or `'foo`) from a syntax object.
 
 ### The solution
 
-Finally we will rely heavily on `syntax-parse`, Racket's advanced macro system.
+Finally we will rely heavily on Racket's advanced macro system, by accessing it with `syntax-parse`.
 
 Basically we:
 
@@ -981,7 +1000,17 @@ Basically we:
               body)]))]))
 ```
 
-At this point, the macro is complete!
+To unpack this:
+
+- `q:comp-clause` pulls in every clause parsed by our syntax class.
+- We flatten their `pieces` into a single list (`flat`).
+- We check whether any clause had a binding (`has-bind?`).
+- Finally, we splice the clauses into a `for*/list` expression.
+
+`with-syntax` introduces new syntax bindings for use inside the expansion.
+It's like let for syntax objects.
+
+At this point, **the macro is complete!**
 
 ### Battle testing it
 
@@ -992,24 +1021,36 @@ Let's use Racket's unit tests module to play around with it:
   (require rackunit)
 
   ;; simple
-  (check-equal? (list-comp x [x <- (.. 1 5)] (even? x))
-                '(2 4))
+  (check-equal?
+   (list-comp x [x <- (.. 1 5)] (even? x))
+   '(2 4))
   ;; pairs
-  (check-equal? (list-comp (list x y) [x <- '(1 2)] [y <- '(3 4)])
-                '((1 3) (1 4) (2 3) (2 4)))
+  (check-equal?
+   (list-comp (list x y) [x <- '(1 2)] [y <- '(3 4)])
+   '((1 3) (1 4) (2 3) (2 4)))
   ;; variables
-  (check-equal? (list-comp x [x <- (.. 1 10)] [let ([num 5]) (= num x)])
-                '(5))
+  (check-equal?
+   (list-comp x [x <- (.. 1 10)] [let ([num 5]) (= num x)])
+   '(5))
   ;; only the first part of a pair
-  (check-equal? (list-comp a [(list a b) <- '((1 5) (4 2))] (= (+ a b) 6))
-                '(1 4))
+  (check-equal?
+   (list-comp a [(list a b) <- '((1 5) (4 2))] (= (+ a b) 6))
+   '(1 4))
   ;; constants
-  (check-equal? (list-comp 42 (< 1 2))
-                '(42))
+  (check-equal?
+   (list-comp 42 (< 1 2))
+   '(42))
   ;; descending range
-  (check-equal? (list-comp n [n <- (.. 10 2 -2)])
-                '(10 8 6 4 2)))
+  (check-equal?
+   (list-comp n [n <- (.. 10 2 -2)])
+   '(10 8 6 4 2)))
 ```
+
+<!-- TODO: add test for multiple generators -->
+<!-- (list-comp (list x y) -->
+<!--            [x <- (.. 1 3)] -->
+<!--            [y <- (.. 1 2)]) -->
+<!-- ;; => '((1 1) (1 2) (2 1) (2 2) (3 1) (3 2)) -->
 
 And the result:
 
@@ -1023,7 +1064,14 @@ raco test: (submod (file "list-comp.rkt") test)
 
 I hope this showcase can be useful to better understand programming paradigms and the power of homoiconic languages.
 
-As an exercise you could try to extend this rule to add an `unless` guard.
+As an exercise you could try to extend this rule to add an `unless` guard:
+
+```racket
+(list-comp x
+  [x <- (.. 1 10)]
+  [unless (even? x)])
+; -> '(1 3 5 7 9)
+```
 
 First you would need to declare it into the `#:datum-literals`, and then add a `pattern`.
 
