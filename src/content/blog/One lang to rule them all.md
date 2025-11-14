@@ -1,5 +1,5 @@
 ---
-title: 'One lang to rule them all: Part I - OOP'
+title: 'One lang to rule them all'
 description: ''
 pubDate: 'Oct 09 2025'
 heroImage: '../../assets/racket.png'
@@ -599,34 +599,34 @@ Porting this to Racket is almost trivial:
                   foods)]))
 ```
 
-### See to believe
-
-Just to be sure we are going to run these queries:
-
-<!-- TODO: explain a bit -->
-
-```racket
-(module+ main
-  (printf "example a: may_overstocked_orders:\n")
-  (let ([ans (%which (code price) (%may-overstocked-orders code price))])
-    (displayln ans)
-    (let loop ()
-      (define more (%more))
-      (when more
-        (displayln more)
-        (loop))))
-
-  (printf "\nexample b: understocked_food_in_central for 'drink:\n")
-  (let ([ans2 (%which (foods) (%understocked-food-in-central 'drink foods))])
-    (displayln ans2)
-    (let loop ()
-      (define more (%more))
-      (when more
-        (displayln more)
-        (loop)))))
-```
-
-With this you can see that Logic Programming done in Racket is basically the same as Prolog, albeit minor syntax changes.
+<!-- ### See to believe -->
+<!---->
+<!-- Just to be sure we are going to run these queries: -->
+<!---->
+<!-- <!-- TODO: explain a bit --> -->
+<!---->
+<!-- ```racket -->
+<!-- (module+ main -->
+<!--   (printf "example a: may_overstocked_orders:\n") -->
+<!--   (let ([ans (%which (code price) (%may-overstocked-orders code price))]) -->
+<!--     (displayln ans) -->
+<!--     (let loop () -->
+<!--       (define more (%more)) -->
+<!--       (when more -->
+<!--         (displayln more) -->
+<!--         (loop)))) -->
+<!---->
+<!--   (printf "\nexample b: understocked_food_in_central for 'drink:\n") -->
+<!--   (let ([ans2 (%which (foods) (%understocked-food-in-central 'drink foods))]) -->
+<!--     (displayln ans2) -->
+<!--     (let loop () -->
+<!--       (define more (%more)) -->
+<!--       (when more -->
+<!--         (displayln more) -->
+<!--         (loop))))) -->
+<!-- ``` -->
+<!---->
+<!-- With this you can see that Logic Programming done in Racket is basically the same as Prolog, albeit minor syntax changes. -->
 
 ## Functional Programming
 
