@@ -1,0 +1,86 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+@import '@catppuccin/tailwindcss/macchiato.css';
+
+/* The colour mode values are the Catppuccin flavours, so the package's own `.latte` /
+   `.macchiato` blocks supply the palette. Its `@variant dark { :root { … } }` switch
+   cannot be used: against a class-based dark variant it compiles to
+   `:scope:where(.dark,.dark *) :root`, which never matches. */
+@custom-variant dark (&:where(.macchiato, .macchiato *));
+
+@utility glass {
+  @apply bg-elevated/25 border-muted backdrop-blur-md backdrop-saturate-150;
+}
+
+@theme {
+  --animate-float-orb: float-orb 25s infinite ease-in-out;
+  --animate-float-shape: float-shape 30s infinite ease-in-out;
+
+  @keyframes float-orb {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-40px); }
+  }
+
+  @keyframes float-shape {
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+    25% { transform: translateY(-20px) translateX(30px) rotate(45deg); }
+    50% { transform: translateY(-40px) translateX(0) rotate(90deg); }
+    75% { transform: translateY(-20px) translateX(-30px) rotate(135deg); }
+  }
+}
+
+/* `--catppuccin-color-*`, not `--color-ctp-*`: the latter is `@theme inline` and only
+   resolves inside Tailwind-generated utilities. */
+:root {
+  --ui-primary: var(--catppuccin-color-mauve);
+  --ui-secondary: var(--catppuccin-color-blue);
+  --ui-success: var(--catppuccin-color-green);
+  --ui-info: var(--catppuccin-color-sapphire);
+  --ui-warning: var(--catppuccin-color-yellow);
+  --ui-error: var(--catppuccin-color-red);
+
+  --ui-text-dimmed: var(--catppuccin-color-overlay0);
+  --ui-text-muted: var(--catppuccin-color-overlay2);
+  --ui-text-toned: var(--catppuccin-color-subtext0);
+  --ui-text: var(--catppuccin-color-text);
+  --ui-text-highlighted: var(--catppuccin-color-text);
+
+  --ui-bg: var(--catppuccin-color-base);
+  --ui-bg-muted: var(--catppuccin-color-mantle);
+  --ui-bg-elevated: var(--catppuccin-color-surface0);
+  --ui-bg-accented: var(--catppuccin-color-surface1);
+
+  /* Nuxt UI flips its own tokens on `.light` / `.dark`, which no longer appear, so the
+     inverted ones must be mapped too or solid buttons keep light text in Macchiato. */
+  --ui-text-inverted: var(--catppuccin-color-base);
+  --ui-bg-inverted: var(--catppuccin-color-text);
+  --ui-border-inverted: var(--catppuccin-color-text);
+
+  --ui-border: var(--catppuccin-color-surface0);
+  --ui-border-muted: var(--catppuccin-color-surface0);
+  --ui-border-accented: var(--catppuccin-color-surface1);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: transparent; /* AppBackground paints the page; Nuxt UI sets bg-default */
+}
+
+code,
+pre,
+kbd {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Shiki emits one colour variable per theme; nothing else picks between them. */
+.shiki span {
+  color: var(--shiki-default);
+  font-style: var(--shiki-default-font-style, normal);
+  font-weight: var(--shiki-default-font-weight, inherit);
+}
+
+.macchiato .shiki span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style, normal);
+  font-weight: var(--shiki-dark-font-weight, inherit);
+}
