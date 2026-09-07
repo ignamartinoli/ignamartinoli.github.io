@@ -3,9 +3,9 @@ const background = useBackground()
 const palette = useCatppuccin()
 const colorMode = useColorMode()
 
-// TEMPORARY (background comparison), dev only: `import.meta.dev` is replaced with
-// `false` at build time, so ogl and the bg/ components never reach production.
-const modules = import.meta.dev ? import.meta.glob('./bg/*.vue') : {}
+// TEMPORARY (background comparison): each background is lazily imported, so only the
+// selected one is fetched. Remove this and the bg/ folder once one is chosen.
+const modules = import.meta.glob('./bg/*.vue')
 const root = useTemplateRef<HTMLElement>('root')
 
 const dark = computed(() => colorMode.value === 'macchiato')

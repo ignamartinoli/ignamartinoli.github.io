@@ -1,6 +1,6 @@
-// TEMPORARY: background comparison. To remove, delete app/components/bg/,
-// BackgroundSwitcher.vue, SiteBackground.vue and this file, put <AppBackground />
-// back in the layout, then `pnpm remove ogl`.
+// TEMPORARY: background comparison, live on the deployed site. To remove, delete
+// app/components/bg/, BackgroundSwitcher.vue, SiteBackground.vue and this file, put
+// <AppBackground /> back in the layout, then `pnpm remove ogl`.
 export const BACKGROUNDS = [
   'Original',
   'Aurora',
