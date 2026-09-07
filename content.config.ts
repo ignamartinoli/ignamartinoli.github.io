@@ -14,6 +14,7 @@ export default defineContentConfig({
       source: { include: 'blog/**/*.md' },
       schema: z.object({
         pubDate: z.date(),
+        tags: z.array(z.string()).optional(),
         updatedDate: z.date().optional(),
         heroImage: z.string().optional()
       })

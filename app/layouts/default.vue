@@ -1,5 +1,13 @@
+<script setup lang="ts">
+// TEMPORARY (background comparison): dropped entirely from production builds.
+const BackgroundSwitcher = import.meta.dev
+  ? defineAsyncComponent(() => import('~/components/BackgroundSwitcher.vue'))
+  : null
+</script>
+
 <template>
-  <AppBackground />
+  <SiteBackground />
+  <component :is="BackgroundSwitcher" v-if="BackgroundSwitcher" />
 
   <UButton
     to="#main"

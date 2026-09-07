@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
       <link>${url}${post.path}</link>
       <guid>${url}${post.path}</guid>
       <pubDate>${new Date(post.pubDate).toUTCString()}</pubDate>
+${(post.tags ?? []).map(tag => `      <category>${escape(tag)}</category>`).join('\n')}
     </item>`).join('\n')
 
   setHeader(event, 'content-type', 'application/rss+xml; charset=utf-8')

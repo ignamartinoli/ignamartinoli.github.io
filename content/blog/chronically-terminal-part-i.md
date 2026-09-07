@@ -2,6 +2,7 @@
 title: 'Chronically terminal: Part I'
 description: 'or how I learned to stop worring and love the terminal'
 pubDate: 'Aug 21 2025'
+tags: ['terminal', 'tooling', 'neovim']
 heroImage: '/images/chronically-terminal-part-i.png'
 ---
 

@@ -52,3 +52,10 @@ Maths is written in `$…$` / `$$…$$` and rendered with KaTeX.
 | `app/components/` | header, animated background, post date |
 | `app/pages/` | `[...slug]` (content pages), `blog/` (index + post) |
 | `server/routes/rss.xml.ts` | RSS feed |
+
+## Credits
+
+The alternative page backgrounds in `app/components/bg/` are [Vue Bits](https://vue-bits.dev)
+components by David Haz, used under MIT + Commons Clause. Two carry local fixes — see
+`app/components/bg/README.md` for the details and `app/components/bg/LICENSE.md` for the
+licence. They are development-only and are excluded from production builds.

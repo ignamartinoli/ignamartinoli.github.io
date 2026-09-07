@@ -10,7 +10,7 @@ export default defineAppConfig({
   giscus: {
     repoId: 'R_kgDOMB_Ftg',
     category: 'Announcements',
-    categoryId: ''
+    categoryId: 'DIC_kwDOMB_Fts4DFCiB'
   },
   ui: {
     // Nuxt UI builds its 50-950 scales from a Tailwind colour, and Catppuccin is not one;
@@ -20,6 +20,13 @@ export default defineAppConfig({
     // the centre instead so every image still fills the card.
     blogPost: {
       slots: { image: 'object-cover object-center' }
+    },
+    contentToc: {
+      variants: {
+        active: {
+          false: { link: 'text-default hover:text-highlighted transition-colors' }
+        }
+      }
     },
     prose: {
       table: {

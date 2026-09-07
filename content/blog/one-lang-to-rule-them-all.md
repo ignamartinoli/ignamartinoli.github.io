@@ -2,9 +2,9 @@
 title: 'One lang to rule them all'
 description: 'Racket as a language for building languages'
 pubDate: 'Oct 09 2025'
+tags: ['paradigms', 'languages', 'racket', 'lisp']
 heroImage: '/images/racket.png'
 ---
-
 
 <img src="/Racket-logo.svg" alt="Racket logo" style="float: right; margin-right: 1em; width: 10em;" width="512" height="512" />
 

@@ -26,6 +26,8 @@ useSeoMeta({
       <UPageHeader :title="post.title" :description="post.description">
         <template #headline>
           <PostDate :date="post.pubDate" :updated="post.updatedDate" />
+
+          <PostTags link :tags="post.tags" />
         </template>
 
         <img

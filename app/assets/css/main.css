@@ -9,7 +9,7 @@
 @custom-variant dark (&:where(.macchiato, .macchiato *));
 
 @utility glass {
-  @apply bg-elevated/25 border-muted backdrop-blur-md backdrop-saturate-150;
+  @apply bg-elevated/80 border-muted backdrop-blur-md backdrop-saturate-150;
 }
 
 @theme {
@@ -61,9 +61,29 @@
   --ui-border-accented: var(--catppuccin-color-surface1);
 }
 
+/* On the root, not on body: the root's background propagates to the canvas, so it
+   also paints the over-scroll area instead of leaving the browser's default white.
+   `fixed` keeps it viewport-sized, matching the orbs in AppBackground. */
+html {
+  background: linear-gradient(
+    135deg,
+    var(--catppuccin-color-base),
+    var(--catppuccin-color-mantle),
+    var(--catppuccin-color-crust)
+  ) fixed;
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  background: transparent; /* AppBackground paints the page; Nuxt UI sets bg-default */
+  background: transparent; /* Nuxt UI sets bg-default; let the root gradient through */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 code,

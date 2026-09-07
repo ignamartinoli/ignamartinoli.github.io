@@ -2,6 +2,7 @@
 title: 'From Structure to Shape'
 description: 'A new way of seeing code'
 pubDate: 'Aug 25 2025'
+tags: ['paradigms', 'languages']
 heroImage: '/images/shutterstock-1316477501-2048x1366.png'
 ---
 
