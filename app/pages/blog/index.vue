@@ -20,7 +20,7 @@ useSeoMeta({ title: 'Blog', description })
 </script>
 
 <template>
-  <UContainer class="py-12">
+  <UContainer>
     <UPageHeader title="Blog" :description="description" />
 
     <div v-if="tags.length" class="mt-8 flex flex-wrap items-center gap-1.5">
@@ -46,7 +46,6 @@ useSeoMeta({ title: 'Blog', description })
         :date="post.pubDate"
         :orientation="index === 0 ? 'horizontal' : 'vertical'"
         variant="subtle"
-        class="glass transition-transform duration-500 hover:scale-[1.02]"
         :class="index === 0 && 'sm:col-span-2 lg:col-span-3'"
       >
         <template #badge>

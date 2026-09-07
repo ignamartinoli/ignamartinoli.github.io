@@ -2,14 +2,15 @@
 
 ## Features
 
-- add i18n
-- improve header and footer with overscroll
-- add post invariants db, cqrs
+- add post invariants db contracts, cqrs
+- add java typestate post
 - add post for reflective programming
 - finish bqn post
 - add post for prolog scheduler
 - change kitty to ghostty in post
-- write /about
+- write `/about`
+
+- add i18n
 
 ## Fixes
 

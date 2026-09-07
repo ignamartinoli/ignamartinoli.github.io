@@ -37,6 +37,18 @@ with Macchiato as the default — so the palette comes straight from
 `.macchiato` and maps the flavour onto Nuxt UI's `--ui-*` tokens. `system` colour mode is
 not available: it resolves to `light`/`dark`, which are not flavour names.
 
+Code blocks are set in a personal Iosevka build. `public/fonts/` holds a latin +
+punctuation + box-drawing subset of the four faces, regenerated from
+`~/.local/share/fonts/IosevkaCustom/` after a font rebuild with:
+
+```bash
+for f in Regular Bold Italic BoldItalic; do
+  uvx --from 'fonttools[woff]' pyftsubset ~/.local/share/fonts/IosevkaCustom/IosevkaCustom-$f.ttf \
+    --output-file=public/fonts/IosevkaCustom-$f.woff2 --flavor=woff2 \
+    --unicodes='U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+2500-257F,U+25A0-25FF,U+FEFF,U+FFFD'
+done
+```
+
 Code blocks are highlighted with Catppuccin (Latte / Macchiato). A language must be
 listed in `content.build.markdown.highlight.langs` in `nuxt.config.ts` to be highlighted.
 Maths is written in `$…$` / `$$…$$` and rendered with KaTeX.

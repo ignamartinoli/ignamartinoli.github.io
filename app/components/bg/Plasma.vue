@@ -12,7 +12,6 @@ interface PlasmaProps {
   direction?: 'forward' | 'reverse' | 'pingpong';
   scale?: number;
   opacity?: number;
-  mouseInteractive?: boolean;
   renderScale?: number;
   maxDpr?: number;
   targetFps?: number;
@@ -25,7 +24,6 @@ const props = withDefaults(defineProps<PlasmaProps>(), {
   direction: 'forward',
   scale: 1,
   opacity: 1,
-  mouseInteractive: true,
   renderScale: 0.55,
   maxDpr: 1.5,
   targetFps: 60,
@@ -61,8 +59,6 @@ uniform float uSpeed;
 uniform float uDirection;
 uniform float uScale;
 uniform float uOpacity;
-uniform vec2 uMouse;
-uniform float uMouseInteractive;
 uniform float uIterations;
 uniform float uStepScale;
 out vec4 fragColor;
@@ -70,9 +66,6 @@ out vec4 fragColor;
 void mainImage(out vec4 o, vec2 C) {
   vec2 center = iResolution.xy * 0.5;
   C = (C - center) / uScale + center;
-  
-  vec2 mouseOffset = (uMouse - center) * 0.0002;
-  C += mouseOffset * length(C - center) * step(0.5, uMouseInteractive);
   
   float i, d, z, T = iTime * uSpeed * uDirection;
   vec3 O, p, S;
@@ -162,25 +155,12 @@ const setup = () => {
       uDirection: { value: directionMultiplier },
       uScale: { value: props.scale },
       uOpacity: { value: props.opacity },
-      uMouse: { value: new Float32Array([0, 0]) },
-      uMouseInteractive: { value: props.mouseInteractive ? 1.0 : 0.0 },
       uIterations: { value: iterations },
       uStepScale: { value: ORIGINAL_ITERATIONS / iterations }
     }
   });
 
   const mesh = new Mesh(gl, { geometry, program });
-
-  let pendingMouse: { x: number; y: number } | null = null;
-
-  const handleMouseMove = (e: MouseEvent) => {
-    const rect = container.getBoundingClientRect();
-    pendingMouse = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-  };
-
-  if (props.mouseInteractive) {
-    container.addEventListener('mousemove', handleMouseMove, { passive: true });
-  }
 
   const setSize = () => {
     const rect = container.getBoundingClientRect();
@@ -214,14 +194,6 @@ const setup = () => {
   let lastFrameTime = 0;
   let elapsedTime = 0;
 
-  const applyPendingMouse = () => {
-    if (!pendingMouse) return;
-    const mouseUniform = program.uniforms.uMouse.value as Float32Array;
-    mouseUniform[0] = pendingMouse.x;
-    mouseUniform[1] = pendingMouse.y;
-    pendingMouse = null;
-  };
-
   const loop = (t: number) => {
     if (contextLost || !isVisible || !tabVisible) {
       raf = 0;
@@ -236,8 +208,6 @@ const setup = () => {
     // Time is accumulated instead of derived from the start, so pauses don't make the animation jump.
     elapsedTime += (lastFrameTime === 0 ? 0 : t - lastFrameTime) * 0.001;
     lastFrameTime = t;
-
-    applyPendingMouse();
 
     if (props.direction === 'pingpong') {
       const cycle = Math.sin(elapsedTime * 0.5) * directionMultiplier;
@@ -300,9 +270,6 @@ const setup = () => {
     document.removeEventListener('visibilitychange', handleVisibilityChange);
     canvas.removeEventListener('webglcontextlost', handleContextLost);
     canvas.removeEventListener('webglcontextrestored', handleContextRestored);
-    if (props.mouseInteractive) {
-      container.removeEventListener('mousemove', handleMouseMove);
-    }
     try {
       container.removeChild(canvas);
     } catch {}

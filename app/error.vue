@@ -8,13 +8,8 @@ useSeoMeta({ title: `${error.statusCode}` })
 
 <template>
   <UApp>
-    <AppBackground />
-    <AppHeader />
-
-    <UMain>
+    <NuxtLayout>
       <UError :error="error" />
-    </UMain>
-
-    <AppFooter />
+    </NuxtLayout>
   </UApp>
 </template>

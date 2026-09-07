@@ -14,7 +14,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer class="py-12">
+  <UContainer>
     <UPageBody v-if="page">
       <ContentRenderer :value="page" />
     </UPageBody>
@@ -38,7 +38,6 @@ useSeoMeta({
           :image="post.heroImage"
           :date="post.pubDate"
           variant="subtle"
-          class="glass transition-transform duration-500 hover:scale-[1.02]"
         />
       </UBlogPosts>
     </section>

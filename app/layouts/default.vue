@@ -18,7 +18,7 @@ const BackgroundSwitcher = defineAsyncComponent(() => import('~/components/Backg
 
   <AppHeader />
 
-  <UMain id="main">
+  <UMain id="main" class="py-12">
     <slot />
   </UMain>
 

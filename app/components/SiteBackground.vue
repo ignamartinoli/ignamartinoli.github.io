@@ -50,35 +50,32 @@ const colors = computed<Record<string, unknown>>(() => {
   const p = palette.value
   if (!p.mauve) return {}
 
-  const dark = colorMode.value === 'macchiato'
-
-
   // Tinting far enough for text contrast turned the accent grey, so keep it saturated
   // and let the opaque glass panels carry legibility instead.
-  const accent = dark ? p.mauve : tint(p.mauve, 0.3)
+  const accent = dark.value ? p.mauve : tint(p.mauve, 0.3)
 
   return {
     // Aurora's own defaults are [page, accent, page] so the ribbon fades out at the
     // edges. Three accents made it a solid band that competes with the text.
     Aurora: { colorStops: [p.base, p.mauve, p.base], amplitude: 1 },
-    Plasma: { color: accent, opacity: dark ? 0.8 : 0.35 },
+    Plasma: { color: accent, opacity: dark.value ? 0.8 : 0.35 },
     // Light needs far less contrast, or the grid reads through the glass panels.
     ShapeGrid: {
-      borderColor: rgba(p.overlay0, dark ? 0.55 : 0.3),
-      hoverFillColor: rgba(p.mauve, dark ? 0.8 : 0.45),
+      borderColor: rgba(p.overlay0, dark.value ? 0.55 : 0.3),
+      hoverFillColor: rgba(p.mauve, dark.value ? 0.8 : 0.45),
       // The vignette is what was smothering the corners; fade to the page colour.
-      vignetteColor: rgba(p.base, dark ? 0.9 : 0.75)
+      vignetteColor: rgba(p.base, dark.value ? 0.9 : 0.75)
     },
     // Its dots are filled with this gradient, so light needs more alpha, not less.
     DotField: {
       glowRadius: 0, // kills the halo that tracked the cursor
       glowColor: p.mauve,
       dotRadius: 2.2,
-      gradientFrom: rgba(p.mauve, dark ? 0.7 : 0.85),
-      gradientTo: rgba(p.teal, dark ? 0.55 : 0.7)
+      gradientFrom: rgba(p.mauve, dark.value ? 0.7 : 0.85),
+      gradientTo: rgba(p.teal, dark.value ? 0.55 : 0.7)
     },
     // Iridescence paints opaque, so it has to carry the light/dark itself.
-    Iridescence: { color: channels(dark ? shade(p.mauve, 0.28) : tint(p.mauve, 0.88)) }
+    Iridescence: { color: channels(dark.value ? shade(p.mauve, 0.28) : tint(p.mauve, 0.88)) }
   }[background.value] ?? {}
 })
 

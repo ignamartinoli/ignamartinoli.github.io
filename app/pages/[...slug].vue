@@ -17,7 +17,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer v-if="page" class="py-12">
+  <UContainer v-if="page">
     <UPageBody>
       <ContentRenderer :value="page" />
     </UPageBody>

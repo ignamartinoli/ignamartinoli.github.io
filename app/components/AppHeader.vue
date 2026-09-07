@@ -22,7 +22,7 @@ const links = [
 </script>
 
 <template>
-  <UHeader :title="site.name" :toggle="false" :ui="{ root: 'glass border-b' }">
+  <UHeader :title="site.name" :toggle="false" :ui="{ root: 'glass border-y' }">
     <template #title>
       <img src="/favicon.svg" alt="" width="32" height="32">
       <span>{{ site.name }}</span>

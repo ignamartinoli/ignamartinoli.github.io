@@ -19,7 +19,10 @@ export default defineAppConfig({
     // Nuxt UI anchors card images to the top, which halves a square hero. Crop from
     // the centre instead so every image still fills the card.
     blogPost: {
-      slots: { image: 'object-cover object-center' }
+      slots: {
+        root: 'glass duration-500 hover:scale-[1.02]',
+        image: 'object-cover object-center'
+      }
     },
     contentToc: {
       variants: {
@@ -28,22 +31,13 @@ export default defineAppConfig({
         }
       }
     },
+    // Every article body is a UPageBody, so the prose type scale is set there once
+    // (`post-body` in main.css) rather than per page.
+    pageBody: { base: 'post-body' },
+    // Default thead is bg-muted, a shade off the table body; bg-elevated is the same
+    // step up the surface scale and actually reads as a header row.
     prose: {
-      table: {
-        slots: {
-          root: 'glass my-6 rounded-xl',
-          base: 'rounded-xl'
-        }
-      },
-      thead: {
-        base: 'bg-elevated/60 bg-linear-to-b from-white/10 to-transparent'
-      },
-      th: {
-        base: 'py-3.5 tracking-wide'
-      },
-      tr: {
-        base: '[&:first-child>th:first-child]:rounded-ss-xl [&:first-child>th:last-child]:rounded-se-xl [&:last-child>td:first-child]:rounded-es-xl [&:last-child>td:last-child]:rounded-ee-xl'
-      }
+      thead: { base: 'bg-elevated' }
     }
   }
 })

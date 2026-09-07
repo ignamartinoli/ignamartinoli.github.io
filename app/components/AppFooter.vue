@@ -4,7 +4,7 @@ const { repo, links } = useAppConfig()
 </script>
 
 <template>
-  <UFooter :ui="{ root: 'glass border-t' }">
+  <UFooter :ui="{ root: 'glass border-y' }">
     <template #left>
       <p class="text-sm text-muted">
         © {{ new Date().getFullYear() }} {{ site.name }}

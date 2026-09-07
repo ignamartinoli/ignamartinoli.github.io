@@ -86,10 +86,54 @@ body {
   }
 }
 
+/* Subset of the local Iosevka build (latin + punctuation + box drawing), so visitors
+   without it installed still get it. Regenerate with pyftsubset; see README. */
+@font-face {
+  font-family: 'IosevkaCustom';
+  src: url('/fonts/IosevkaCustom-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IosevkaCustom';
+  src: url('/fonts/IosevkaCustom-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IosevkaCustom';
+  src: url('/fonts/IosevkaCustom-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IosevkaCustom';
+  src: url('/fonts/IosevkaCustom-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 code,
 pre,
 kbd {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IosevkaCustom', 'JetBrains Mono', monospace;
+}
+
+/* Article prose reads small at the browser default. Nuxt UI's own sizes are rem-based,
+   so a wrapper bump alone leaves code, tables and captions behind — nudge those too. */
+.post-body {
+  font-size: 1.1875rem;
+}
+
+.post-body :is(pre, code, kbd, td, th) {
+  font-size: 1.0625rem;
 }
 
 /* Shiki emits one colour variable per theme; nothing else picks between them. */

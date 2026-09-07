@@ -1,6 +1,6 @@
 // TEMPORARY (background comparison): reads the live palette so the Vue Bits
 // backgrounds follow the Latte/Macchiato toggle like the rest of the site.
-const NAMES = ['mauve', 'blue', 'teal', 'lavender', 'base', 'surface1', 'overlay0'] as const
+const NAMES = ['mauve', 'teal', 'base', 'overlay0'] as const
 
 export function useCatppuccin() {
   const colorMode = useColorMode()

@@ -21,7 +21,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer v-if="post" class="py-12">
+  <UContainer v-if="post">
     <UPage>
       <UPageHeader :title="post.title" :description="post.description">
         <template #headline>
@@ -49,10 +49,12 @@ useSeoMeta({
       </UPageBody>
 
       <template #right>
+        <!-- The root is the grid column itself, so it stretches to the article's
+             height; self-start shrinks it back to its own content. -->
         <UContentToc
           :links="post.body.toc?.links"
           highlight
-          class="max-lg:hidden lg:glass lg:rounded-xl"
+          class="max-lg:hidden lg:glass lg:rounded-lg lg:border lg:self-start lg:top-[calc(var(--ui-header-height)+3rem)] lg:max-h-[calc(100vh-var(--ui-header-height)-6rem)]"
         />
       </template>
     </UPage>
